@@ -1,0 +1,24 @@
+.categories {
+  display: flex;
+  padding: 20px;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 18vw;
+  height: 14vh;
+  margin: 10px 20px 10px 0;
+  border-radius: 20px;
+  background-color: var(--box-color);
+  box-shadow: 0 1px 5px -1px rgba(40, 40, 93, 0.1),
+    0 8px 10px -8px rgba(0, 0, 0, 0.3), 0 -6px 10px -6px rgba(0, 0, 0, 0.025);
+}
+
+.category__title {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.label__np {
+  color: blue;
+  margin-bottom: 5px;
+}

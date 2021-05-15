@@ -1,0 +1,55 @@
+.problem {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  background-color: var(--box-color);
+  box-shadow: 0 1px 5px -1px rgba(40, 40, 93, 0.1),
+    0 8px 10px -8px rgba(0, 0, 0, 0.3), 0 -6px 10px -6px rgba(0, 0, 0, 0.025);
+}
+
+.problem__title {
+  font-size: 1.4em;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.problem__link {
+  margin-left: 10px;
+  color: blue;
+  font-weight: 500;
+  font-size: initial;
+}
+.problem__link:hover {
+  font-weight: bold;
+}
+
+.problem__info {
+  display: flex;
+  
+}
+
+.problem__writer {
+  font-size: 1.1em;
+}
+
+.languages {
+  display: flex;
+  justify-content: flex-end;
+  flex-grow: 2;
+}
+
+.languages__languege {
+  display: inline-block;
+  border: 1px solid var(--primary-color);
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 0.5em;
+}
+
+.languages__languege:hover {
+  font-weight: bold;
+  color: var(--interactive-color);
+  box-shadow: 0 0 1px 1px var(--interactive-color);
+}

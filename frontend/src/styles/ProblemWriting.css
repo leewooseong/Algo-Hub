@@ -1,0 +1,80 @@
+.writing__title {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.writing__label {
+  display: inline-block;
+  width: 100%;
+  font-size: 1.3em;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.writing__input {
+  width: 90%;
+  padding: 7px 10px;
+  border-radius: 5px;
+  border: 0;
+  background-color: var(--box-color);
+  margin-bottom: 18px;
+}
+
+.writing__input::placeholder {
+  font-size: 0.8em;
+}
+
+input[type="checkbox"] + label {
+  display: inline-block;
+  margin-right: 0.2em;
+  cursor: pointer;
+  padding: 0.2em;
+  margin-bottom: 18px;
+}
+
+input[type="checkbox"] {
+  display: none;
+}
+
+input[type="checkbox"] + label:before {
+  content: "\2714";
+  border: 0.1em solid #000;
+  display: inline-block;
+  width: 0.9em;
+  height: 0.9em;
+  padding-left: 0.2em;
+  padding-bottom: 0.3em;
+  margin-right: 0.2em;
+  vertical-align: bottom;
+  color: transparent;
+  transition: 0.1s;
+  border-radius: 4px;
+}
+
+input[type="checkbox"]:checked + label:before {
+  background-color: mediumseagreen;
+  color: #fff;
+  border-color: mediumseagreen;
+}
+.writing__comment {
+  resize: none;
+}
+
+.writing__btn {
+  display: block;
+  width: 70px;
+  padding: 5px;
+  border: 1px solid var(--interactive-color);
+  border-radius: 5px;
+  background-color: var(--box-color);
+}
+
+.writing__btn:hover {
+  box-shadow: 0 0 1px 1px var(--interactive-color);
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.select__language {
+  margin-left: 1%;
+}

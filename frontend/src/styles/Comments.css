@@ -1,0 +1,22 @@
+/* comments */
+.comment__list {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 4px;
+}
+
+.comment__image {
+  border-radius: 10px;
+  vertical-align: middle;
+  height: 19px;
+}
+
+.comment__writer {
+  text-align: left;
+  margin: 0 5px;
+}
+
+
+.comment__content {
+  flex-grow: 1;
+}

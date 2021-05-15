@@ -1,0 +1,29 @@
+.App__footer {
+  padding: 60px;
+  background-color: var(--box-color);
+  margin-left: 2px;
+  text-align: center;
+  border-top: 1px solid var(--interactive-color);
+}
+
+.service__name {
+  display: block;
+  font-size: 2.0em;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.service__content {
+  font-size: 1em;
+  margin-bottom: 10px;
+}
+
+.service__adderss {
+  font-size: 1em;
+  margin-bottom: 10px;
+}
+
+.export__link {
+  font-size: 1.5em;
+  margin-right: 10px;
+}

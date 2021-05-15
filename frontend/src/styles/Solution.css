@@ -1,0 +1,40 @@
+.solution__source {
+  margin-top: 10px;
+}
+
+.solution__container {
+  margin-top: 20px;
+}
+
+.solution__container > img {
+  vertical-align: middle;
+  border-radius: 10px;
+}
+
+.solution__writer {
+  font-weight: bold;
+  margin: 0 5px;
+}
+
+.solution__writer > i {
+  margin-left: 5px;
+  color: red;
+}
+
+.solution__code {
+  border-radius: 10px 10px 0 0;
+  border: 1px solid var(--interactive-color);
+  padding: 20px;
+  margin-top: 5px;
+}
+
+.solution__comments {
+  padding: 29px 20px 20px;
+  margin-top: -9px;
+  border: 1px solid var(--interactive-color);
+  border-top: 0;
+  border-radius: 0 0 10px 10px;
+  font-size: 0.9em;
+  display: flex;
+  flex-direction: column;
+}

@@ -1,0 +1,56 @@
+.App__header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  grid-row: 1 / span 2;
+  width: 160px;
+  background-color: var(--primary-color);
+  margin-right: 4px;
+  color: var(--text-color);
+  padding: 20px;
+  box-shadow: 2px 1px var(--interactive-color);
+}
+
+.App__Logo {
+  position: relative;
+  font-family: "Orelega One", cursive;
+}
+.App__Logo i {
+  position: absolute;
+  top: 28%;
+  font-size: 1em;
+  margin: 0 4px 0 0;
+}
+
+.App__title {
+  font-size: 2em;
+  color: #fff;
+  margin-left: 25px;
+}
+
+/*  nav   */
+.App__nav {
+  flex-grow: 2;
+  margin-top: 40px;
+}
+
+.nav__item {
+  line-height: 50px;
+  font-weight: bold;
+  margin: 5px auto;
+}
+
+.nav__item:hover {
+  cursor: pointer;
+  border-radius: 6px;
+  background-color: var(--interactive-color);
+}
+
+.nav__item i {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  font-size: 0.8em;
+  line-height: 1em;
+  margin: 0 4px 10px;
+}

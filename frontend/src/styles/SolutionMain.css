@@ -1,0 +1,54 @@
+.section__title > a {
+  font-size: 0.6em;
+}
+
+/* User */
+.user__info {
+  vertical-align: middle;
+  margin: -10px 0 0 0;
+}
+.user__image {
+  vertical-align: middle;
+  border-radius: 10px;
+}
+
+.user__name {
+  font-size: 1em;
+  line-height: 30px;
+  font-weight: bold;
+  margin: 0 5px;
+}
+
+.user__name + i {
+  font-size: 1em;
+  vertical-align: middle;
+  cursor: pointer;
+  color: red;
+}
+
+/* Writer */
+.comment__label {
+  font-size: 1em;
+  font-weight: bold;
+}
+
+.writer__codebox {
+  border-radius: 10px;
+  border: 1px solid var(--interactive-color);
+  margin: -5px 0 0x 0;
+  padding: 20px;
+}
+.writer__comment {
+  margin-top: 10px;
+}
+.writer__content {
+  font-size: 0.7em;
+  border: 1px solid var(--interactive-color);
+  border-radius: 10px;
+  padding: 10px;
+  margin: 5px 0;
+}
+
+.language__list {
+  margin: 10px 0;
+}
