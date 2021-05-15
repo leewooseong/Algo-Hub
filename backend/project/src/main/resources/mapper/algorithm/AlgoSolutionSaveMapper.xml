@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="algohub.repository.algorithm.AlgoSolutionSaveRepo">
+    <insert id="setSolution" parameterType="java.util.Map">
+        insert into source_code (s_id, l_c_id, a_id, m_id, code, s_like)
+        select (select * from (select ifnull(max(s_id)+1, 1) from source_code) s_id), T3.l_c_id, T1.a_id, T4.m_id, #{solutionData.code} code, 0 s_like
+        from algorithm T1
+        left join source_code T2
+        on T1.a_id = T2.a_id,
+        (select l_c_id from language_category where language = #{solutionData.language}) T3,
+        (select m_id from member where m_name = #{solutionData.m_name}) T4
+        where T1.a_id = #{solutionData.a_id}
+        group by T1.a_id;
+    </insert>
+</mapper>

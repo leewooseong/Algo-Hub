@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="algohub.repository.algorithm.AlgoCategoryRepo">
+    <select id="getAlgoCategory" resultType="algohub.domain.algorithm.AlgoCategory">
+        SELECT * FROM algorithm_category;
+    </select>
+</mapper>
