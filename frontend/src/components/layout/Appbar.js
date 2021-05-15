@@ -4,6 +4,7 @@ import PropTypes from "prop-types"
 import '../../styles/Appbar.css';
 
 function Appbar({ data }) {
+
   const categories = data.map(category => category['p_category'])
   return <nav className="Appbar">
     <ul className="Appbar__container">

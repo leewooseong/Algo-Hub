@@ -12,12 +12,27 @@
 }
 
 .solution__writer {
+  font-size: 1.2em;
+}
+
+.solution__mname {
   font-weight: bold;
   margin: 0 5px;
 }
+.source__container {
+  position: relative;
+}
+.source__container:before  {
+  position: absolute;
+  font-size: 0.8em;
+  top: -20px;
+  right: 0;
+  content: '🚨 신고하기'
+}
 
-.solution__writer > i {
-  margin-left: 5px;
+
+/* 수정 필요 */
+.solution__mname > i {
   color: red;
 }
 
@@ -29,6 +44,7 @@
 }
 
 .solution__comments {
+  position: relative;
   padding: 29px 20px 20px;
   margin-top: -9px;
   border: 1px solid var(--interactive-color);

@@ -15,7 +15,7 @@ class Algorithm extends React.Component {
     return (
       <div className="App">
         <Header />
-        <Appbar />
+        {/* <Appbar /> */}
         <Switch>
           <Route exact path="/category" component={AlgorithmMain} />
           <Route path="/category/algorithm/writing" component={ProblemWriting} />
