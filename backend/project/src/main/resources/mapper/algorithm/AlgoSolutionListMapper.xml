@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="algohub.repository.algorithm.AlgoSolutionListRepo">
+    <select id="getSolutionWriter" resultType="java.util.Map">
+        select T1.a_id, T1.p_title, T1.p_link, T1.p_content, T2.code, T2.Language, (select m_name from member where m_id = T2.m_id) m_name,
+        (select m_p_image from member_profile where m_p_id = T2.m_id) m_p_image, T2.s_like
+        from (select a_id, p_title, p_link, p_content, m_id
+                from algorithm
+                where p_title = #{p_title}) T1,
+        (select SC.s_id, SC.a_id, SC.m_id, SC.l_c_id, SC.code, SC.s_like, LC.language
+            from source_code SC left join language_category LC
+            on SC.l_c_id = LC.l_c_id where LC.language = #{language}) T2
+        where T1.a_id = T2.a_id and T1.m_id = T2.m_id;
+    </select>
+
+    <select id="getSolution" resultType="java.util.Map">
+        select T2.code,
+        (select group_concat(distinct language separator ',') language
+            from algorithm A
+            left join source_code SC
+            on A.a_id = SC.a_id
+            left join language_category LC
+            on SC.l_c_id = LC.l_c_id
+            where A.a_id = T1.a_id) language,
+        (select m_name from member where m_id = T2.m_id) m_name,
+        (select m_p_image from member_profile where m_p_id = T2.m_id) m_p_image, T2.s_like,
+        (select ifnull(count(*), 0) from source_comment where s_cm_id = T2.s_id) comments
+        from (select a_id, p_title, p_link, p_content, m_id
+            from algorithm
+            where p_title = #{p_title}) T1,
+            (select SC.s_id, SC.a_id, SC.m_id, SC.l_c_id, SC.code, SC.s_like, LC.language
+            from source_code SC left join language_category LC
+            on SC.l_c_id = LC.l_c_id where LC.language = #{language}
+            union
+            select SC.s_id, SC.a_id, SC.m_id, SC.l_c_id, SC.code, SC.s_like, LC.language
+            from source_code SC left join language_category LC
+            on SC.l_c_id = LC.l_c_id where not LC.language = #{language}) T2
+        where T1.a_id = T2.a_id;
+    </select>
+</mapper>

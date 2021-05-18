@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="algohub.repository.member.MemberMapper">
+    <insert id="insertMember" parameterType="algohub.domain.member.MemberJoin">
+        insert into member(
+            m_name,
+            m_pwd,
+            m_age,
+            m_tel,
+            m_email,
+            m_c_id
+        )
+        values(
+            #{m_name},
+            #{m_pwd},
+            #{m_age},
+            #{m_tel},
+            #{m_email},
+            2
+        );
+        insert into member_profile(
+            m_p_image,
+            m_p_intro
+        )
+        values(
+            '기본 이미지 경로',
+            ''
+        );
+    </insert>
+
+    <select id="getMember" parameterType="String" resultType="algohub.domain.member.MemberInquiry">
+        select member.m_id, member.m_name, member.m_email, member_profile.m_p_image
+        from member, member_profile
+        where member.m_name=#{m_name} and m_id=m_p_id;
+    </select>
+
+    <select id="getMemberProfile" parameterType="String" resultType="algohub.domain.member.MemberProfile">
+        select member.m_id, member.m_name, member.m_email, member_profile.m_p_image
+        from member, member_profile
+        where member.m_name=#{m_name} and m_id=m_p_id;
+    </select>
+</mapper>
