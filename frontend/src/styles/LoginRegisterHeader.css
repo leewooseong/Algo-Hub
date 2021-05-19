@@ -1,0 +1,54 @@
+.title {
+  color: black;
+  display: block;
+  text-align: center;
+  height: 50px;
+  width: 200px;
+  margin: 20px auto;
+  font-family: "Poppins", sans-serif;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+/* Simple CSS3 Fade-in Animation */
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-moz-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fadeIn {
+  border-radius: 5px;
+  opacity: 0;
+
+  -webkit-animation: fadeIn ease-in 1;
+  -moz-animation: fadeIn ease-in 1;
+  animation: fadeIn ease-in 1;
+
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+
+  -webkit-animation-duration: 1s;
+  -moz-animation-duration: 1s;
+  animation-duration: 1s;
+}

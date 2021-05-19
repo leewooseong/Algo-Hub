@@ -50,7 +50,7 @@ class SolutionMain extends React.Component {
         <div className="user__info">
           <img
             className="user__image"
-            src="https://via.placeholder.com/17x17.jpg"
+            src="https://via.placeholder.com/25x25.jpg"
             alt="profile__image"
           />
           <span className="user__name">{this.state.mname}</span>
@@ -65,12 +65,11 @@ class SolutionMain extends React.Component {
           </pre>
         </div>
         <div className="writer__comment">
-          <h3 className="comment__label">작성자 Comment</h3>
+          <h3 className="comment__label writer__label">작성자 Comment</h3>
           <p className="writer__content">{writer["p_content"]}</p>
         </div>
-        <h3>사용 언어</h3>
+        <h3 className="comment__language writer__label">사용 언어</h3>
         <Language languagelist={this.state.language} />
-        <i className="fas fa-exclamation-circle"></i>
         <Link
           to={{
             pathname: "/category/algorithm/solution/writing",

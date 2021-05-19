@@ -1,0 +1,20 @@
+.languages {
+  display: flex;
+  justify-content: flex-end;
+  flex-grow: 2;
+}
+
+.languages__languege {
+  display: inline-block;
+  border: 1px solid var(--primary-color);
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 0.8em;
+}
+
+.languages__languege:hover {
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--interactive-color);
+  box-shadow: 0 0 1px 1px var(--interactive-color);
+}

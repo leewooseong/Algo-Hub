@@ -48,15 +48,15 @@ class Solution extends React.Component {
     const comments = this.state.comments
     return (
       <div className="solution__container">
-        <div className="">
-          <img src="https://via.placeholder.com/20x20.jpg" alt="profile__image" />
-          <label className="solution__writer">
+        <div className="solution__writer">
+          <img src="https://via.placeholder.com/20x20.jpg" alt="profile__image" className="user__image" />
+          <span className="solution__mname">
             {this.props.m_name} 님의 풀이
             <i className="fas fa-heart"> {this.props.s_cm_like}</i>
-          </label>
+          </span>
         </div>
         <div className="solution__source ">
-          <pre>
+          <pre className="source__container">
             <code className={`${this.props.language} writer__codebox hljs`}>
               {this.props.code}
             </code>
@@ -75,6 +75,10 @@ class Solution extends React.Component {
               />
             )}
           </ul>
+          <div className="comment__writing">
+            <input type="text" placeholder="내용을 작성하세요."></input>
+            <button>등록</button>
+          </div>
         </div>
       </div>
     )

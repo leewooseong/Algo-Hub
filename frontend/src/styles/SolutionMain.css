@@ -6,30 +6,35 @@
 .user__info {
   vertical-align: middle;
   margin: -10px 0 0 0;
+  font-size: 1.4em;
+  position: relative; 
+  height: inherit;
 }
+
 .user__image {
   vertical-align: middle;
-  border-radius: 10px;
+  border-radius: 20px;
 }
 
 .user__name {
-  font-size: 1em;
-  line-height: 30px;
   font-weight: bold;
   margin: 0 5px;
 }
 
 .user__name + i {
-  font-size: 1em;
-  vertical-align: middle;
   cursor: pointer;
   color: red;
 }
 
+.fa-heart {
+  margin-left: 10px;
+}
+
 /* Writer */
-.comment__label {
-  font-size: 1em;
+.writer__label {
+  font-size: 1.2em;
   font-weight: bold;
+  margin-top: 20px;
 }
 
 .writer__codebox {
@@ -38,17 +43,19 @@
   margin: -5px 0 0x 0;
   padding: 20px;
 }
+
 .writer__comment {
   margin-top: 10px;
 }
+
 .writer__content {
-  font-size: 0.7em;
+  font-size: 0.9em;
   border: 1px solid var(--interactive-color);
   border-radius: 10px;
   padding: 10px;
   margin: 5px 0;
 }
 
-.language__list {
-  margin: 10px 0;
+.comment__language {
+  margin-bottom: 5px;
 }
