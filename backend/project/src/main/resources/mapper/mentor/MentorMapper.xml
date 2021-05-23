@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.algo.mapper.MentorMapper">
+    <select id="getMemberState" parameterType="String" resultType="String">
+        select m_p_state from member m, member_profile mp
+        where m.m_id = mp.m_p_id and m.m_name = #{user}
+    </select>
+
+    <update id="putMemberState" parameterType="String">
+        update member m join member_profile mp on m.m_id = mp.m_p_id
+        set mp.m_p_state = 'Y'
+        where m.m_name = #{m_name};
+
+        insert into mentor_room(
+            m_p_id,
+            mr_score
+        ) values(
+            (select m_p_id from member join member_profile where m_id = m_p_id and m_name = #{m_name}),
+            0
+        );
+    </update>
+
+    <select id="getMentorList" resultType="algohub.domain.mentor.MentorInfo">
+        select
+            m_id,
+            m_name,
+            m_p_image,
+            m_p_intro,
+            post_number,
+            cm_number,
+            mr_score,
+            ifnull(count(ms.mr_id), 0) as m_c_number
+        from
+            (select
+                m_id,
+                m_name,
+                m_p_image,
+                m_p_intro,
+                post_number,
+                cm_number,
+                mr_score,
+                mr_id
+            from member m, member_profile mp, mentor_room mr
+            where m.m_id = mp.m_p_id and m_p_state = 'Y' and mp.m_p_id = mr.m_p_id
+            ) as T
+            left join member_subscribe ms
+        on
+            ms.mr_id = T.mr_id
+        group by T.mr_id;
+    </select>
+
+    <select id="getMentor" parameterType="String" resultType="algohub.domain.mentor.MentorInfo">
+        select
+            m_id,
+            m_name,
+            m_p_image,
+            m_p_intro,
+            post_number,
+            cm_number,
+            mr_score,
+            ifnull(count(ms.mr_id), 0) as m_c_number
+        from
+            (select
+                m_id,
+                m_name,
+                m_p_image,
+                m_p_intro,
+                post_number,
+                cm_number,
+                mr_score,
+                mr_id
+            from member m, member_profile mp, mentor_room mr
+            where m.m_id = mp.m_p_id and m_p_state = 'Y' and mp.m_p_id = mr.m_p_id and m.m_name = #{m_name}
+            ) as T
+            left join member_subscribe ms
+        on
+            ms.mr_id = T.mr_id
+        group by T.mr_id;
+    </select>
+
+    <select id="getMentorPage" parameterType="String" resultType="algohub.domain.mentor.MentorBoard">
+        select mb_c_id, mb_title, mb_content, mb_date
+        from mentor_board;
+    </select>
+
+    <insert id="subscribeMentor" parameterType="hashMap">
+        insert into member_subscribe(mr_id, m_p_id)
+        values(
+        (select mr.mr_id from member m, member_profile mp, mentor_room mr
+                where m.m_name = #{m_name} and m.m_id = mp.m_p_id and mp.m_p_id = mr.m_p_id),
+        (select mp.m_p_id from member m, member_profile mp
+                where m.m_name = #{user} and m.m_id = mp.m_p_id)
+        );
+    </insert>
+
+    <insert id="writeMentorBoard" parameterType="hashMap">
+        insert into mentor_board(
+            mr_id,
+            m_p_id,
+            mb_c_id,
+            mb_title,
+            mb_content,
+            mb_date
+        )
+            select
+                mr.mr_id,
+                mp.m_p_id,
+                #{mentorBoard.mb_c_id},
+                #{mentorBoard.mb_title},
+                #{mentorBoard.mb_content},
+                date_format(now(), '%y.%m.%d %H:%i')
+            from member m, member_profile mp, mentor_room mr
+            where m.m_name = #{user} and m.m_id = mp.m_p_id and mp.m_p_id = mr.mr_id;
+    </insert>
+</mapper>
