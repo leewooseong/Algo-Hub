@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.*;
 
@@ -23,11 +25,20 @@ public class AlgoSaveController {
     @Autowired
     AlgoSaveService algoSaveService;
 
+    HttpSession session;
+
     @PostMapping("/api/algorithms/writing")
-    Map<String, Object> algoSave(@ModelAttribute AlgoSave param) throws IOException {
+    Map<String, Object> algoSave(@ModelAttribute AlgoSave param, HttpServletRequest request) throws IOException {
+
+        // 쿠키에 설정된 세션을 가져옴
+        HttpSession session = request.getSession();
+        String m_id = (String) session.getAttribute("user");
+
         HashMap<String, Object> paramMap = new HashMap<>();
         Map<String, Object> returnCode = new HashMap<>();
         List<String> list = Arrays.asList(param.getP_category().split(","));
+
+        paramMap.put("current_user", m_id);
         paramMap.put("algosave", param);
         paramMap.put("category", list);
         algoSaveService.setAlgoSave(paramMap);

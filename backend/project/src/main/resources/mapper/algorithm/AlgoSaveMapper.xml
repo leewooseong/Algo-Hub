@@ -2,7 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="algohub.repository.algorithm.AlgoSaveRepo">
     <insert id="setAlgoSave" parameterType="hashMap">
-        insert into algorithm values((select * from (select max(a_id)+1 from algorithm) a_id), #{algosave.p_link}, #{algosave.p_title}, #{algosave.p_content}, 0, 1);
+        insert into algorithm values(
+        (select * from (select max(a_id)+1 from algorithm) a_id),
+        #{algosave.p_link},
+        #{algosave.p_title},
+        #{algosave.p_content},
+        0,
+        (select m_id from member where m_email = #{current_user}));
 
         <foreach collection="category" item="i">
             insert into algorithm_category_dup (a_c_d_id, a_id, a_c_id)
@@ -16,11 +22,11 @@
         </foreach>
 
         insert into source_code(s_id, l_c_id, a_id, m_id, code, s_like)
-        select (select * from (select ifnull(max(s_id)+1, 1) from source_code) s_id), T1.l_c_id, max(T2.a_id), T2.m_id, #{algosave.code}, 0
+        select (select * from (select ifnull(max(s_id)+1, 1) from source_code) s_id), T1.l_c_id, max(T2.a_id), (select m_id from member where m_email = #{current_user}) m_id, #{algosave.code}, 0
         from (select LC.l_c_id, LC.language, SC.a_id
-        from source_code SC
-        right join language_category LC
-        on SC.l_c_id = LC.l_c_id
-        where language = #{algosave.language}) T1, algorithm T2;
+              from source_code SC
+              right join language_category LC
+              on SC.l_c_id = LC.l_c_id
+              where language = #{algosave.language}) T1, algorithm T2
     </insert>
 </mapper>

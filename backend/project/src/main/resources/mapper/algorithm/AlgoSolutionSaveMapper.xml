@@ -3,7 +3,12 @@
 <mapper namespace="algohub.repository.algorithm.AlgoSolutionSaveRepo">
     <insert id="setSolution" parameterType="java.util.Map">
         insert into source_code (s_id, l_c_id, a_id, m_id, code, s_like)
-        select (select * from (select ifnull(max(s_id)+1, 1) from source_code) s_id), T3.l_c_id, T1.a_id, T4.m_id, #{solutionData.code} code, 0 s_like
+        select (select * from (select ifnull(max(s_id)+1, 1) from source_code) s_id),
+        T3.l_c_id,
+        T1.a_id,
+        (select m_id from member where m_name = #{current_user}) m_id,
+        #{solutionData.code} code,
+        0 s_like
         from algorithm T1
         left join source_code T2
         on T1.a_id = T2.a_id,

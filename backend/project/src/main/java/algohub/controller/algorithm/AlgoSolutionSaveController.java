@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,9 +27,15 @@ public class AlgoSolutionSaveController {
     AlgoSolutionSaveService algoSolutionSaveService;
 
     @PostMapping("/api/solution/writing")
-    Map<String, Object> setSolution(@ModelAttribute AlgoSolutionSave data) {
+    Map<String, Object> setSolution(@ModelAttribute AlgoSolutionSave data, HttpServletRequest request) {
+
+        HttpSession session = request.getSession();
+        String m_id = (String) session.getAttribute("user");
+
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("solutionData", data);
+        paramMap.put("current_user", m_id);
+
         algoSolutionSaveService.setSolution(paramMap);
 
         Map<String, Object> map = new HashMap<>();
