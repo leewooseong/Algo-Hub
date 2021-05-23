@@ -90,9 +90,10 @@ public class MentorService {
         dataMap.put("mentorBoard", mentorBoard);
         dataMap.put("user", user);
         String memberState = mapper.getMemberState(user);
-        if (memberState == "N" || memberState == null) {
+        if (memberState.equals("N") || memberState == null) {
             return false;
         }
+
         mapper.writeMentorBoard(dataMap);
         return true;
     }

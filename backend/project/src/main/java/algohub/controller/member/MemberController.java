@@ -7,10 +7,14 @@ import algohub.service.member.MemberService;
 import algohub.api.DefaultRes;
 import algohub.api.ResponseMessage;
 import algohub.api.StatusCode;
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @SuppressWarnings("unchecked")
 @RestController
@@ -26,11 +30,17 @@ public class MemberController {
 
     // 회원 가입
     @PostMapping("/api/signup")
-    public ResponseEntity registerMember(@ModelAttribute MemberJoin memberJoin) throws Exception {
-        memberService.insertMember(memberJoin);
-        ResponseEntity responseEntity = new ResponseEntity(DefaultRes.res(
-                StatusCode.OK, ResponseMessage.CREATED_USER), HttpStatus.OK);
-        return responseEntity;
+    public Map<String, Object> registerMember(@ModelAttribute MemberJoin memberJoin) throws Exception {
+        boolean state = memberService.insertMember(memberJoin);
+        Map<String, Object> responseMap = new HashMap();
+        if (state == true) {
+            responseMap.put("statusCode", Response.SC_OK);
+            responseMap.put("message", "회원 가입 완료");
+        } else {
+            responseMap.put("statusCode", Response.SC_BAD_REQUEST);
+            responseMap.put("message", "이미 존재하는 이메일 또는 이름");
+        }
+        return responseMap;
     }
 
     // 회원 조회

@@ -5,8 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class MemberLogin {
-    private String m_email;
-    private String m_pwd;
+// 회원 가입 중복 확인 시 사용하는 DTO
+public class MemberID {
     private String m_name;
+    private String m_email;
 }

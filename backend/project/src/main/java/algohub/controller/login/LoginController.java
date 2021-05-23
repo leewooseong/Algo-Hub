@@ -1,19 +1,14 @@
-package com.example.algo.controller;
+package algohub.controller.login;
 
-import com.example.algo.api.DefaultRes;
-import com.example.algo.api.ResponseMessage;
-import com.example.algo.api.StatusCode;
-import com.example.algo.model.MemberLogin;
-import com.example.algo.service.LoginService;
+import algohub.domain.member.MemberLogin;
+import algohub.service.login.LoginService;
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
+
 
 @SuppressWarnings("unchecked")
 @CrossOrigin(origins = "localhost:8080")
@@ -29,18 +24,17 @@ public class LoginController {
 
     // 로그인
     @PostMapping("/api/auth/login")
-    public ResponseEntity login(@ModelAttribute MemberLogin memberLogin, HttpSession session) throws Exception {
+    public Map<String, Object> login(@ModelAttribute MemberLogin memberLogin, HttpSession session) throws Exception {
+        Map<String, Object> responseMap = new HashMap<>();
         boolean result = service.login(memberLogin, session);
-        ResponseEntity responseEntity;
         if (result == false) {
-            responseEntity = new ResponseEntity(DefaultRes.res(
-                    StatusCode.NOT_FOUND, ResponseMessage.LOGIN_FAIL), HttpStatus.NOT_FOUND);
+            responseMap.put("statusCode", Response.SC_NOT_FOUND);
+            responseMap.put("message", "로그인 실패");
         } else {
-            //session.setAttribute("user", result.getM_email());
-            responseEntity = new ResponseEntity(DefaultRes.res(
-                    StatusCode.OK, ResponseMessage.LOGIN_SUCCESS), HttpStatus.OK);
+            responseMap.put("statusCode", Response.SC_OK);
+            responseMap.put("message", "로그인 완료");
         }
-        return responseEntity;
+        return responseMap;
     }
 
     @GetMapping("/api/logout")

@@ -25,8 +25,14 @@ public class LoginService {
             return false;
 
         boolean result = encoder.matches(memberLogin.getM_pwd(), member.getM_pwd());
-        // 세션 객체에 로그인 유저 저장
-        session.setAttribute("user", member.getM_email());
-        return result;
+
+        // 패스워드 일치 여부 판별
+        if (result == false) {
+            return false;
+        } else {
+            // 세션 객체에 로그인 유저 저장
+            session.setAttribute("user", member.getM_name());
+            return true;
+        }
     }
 }

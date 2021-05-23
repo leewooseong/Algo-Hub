@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.algo.mapper.MentorMapper">
+<mapper namespace="algohub.repository.mentor.MentorMapper">
     <select id="getMemberState" parameterType="String" resultType="String">
         select m_p_state from member m, member_profile mp
         where m.m_id = mp.m_p_id and m.m_name = #{user}
@@ -80,7 +80,8 @@
 
     <select id="getMentorPage" parameterType="String" resultType="algohub.domain.mentor.MentorBoard">
         select mb_c_id, mb_title, mb_content, mb_date
-        from mentor_board;
+        from mentor_board mb, member m, member_profile mp
+        where m.m_name = #{m_name} and m.m_id = mp.m_p_id and mb.m_p_id = mp.m_p_id;
     </select>
 
     <insert id="subscribeMentor" parameterType="hashMap">
@@ -110,6 +111,6 @@
                 #{mentorBoard.mb_content},
                 date_format(now(), '%y.%m.%d %H:%i')
             from member m, member_profile mp, mentor_room mr
-            where m.m_name = #{user} and m.m_id = mp.m_p_id and mp.m_p_id = mr.mr_id;
+            where m.m_name = #{user} and m.m_id = mp.m_p_id and mp.m_p_id = mr.m_p_id;
     </insert>
 </mapper>
