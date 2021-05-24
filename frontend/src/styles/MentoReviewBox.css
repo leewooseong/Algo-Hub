@@ -1,0 +1,78 @@
+.mentiview__mentoreviewbox {
+  grid-column: 1;
+  display: flex;
+  flex-flow: nowrap column;
+  justify-content: center;
+  border-radius: 14px;
+  box-shadow: rgb(0 0 0 / 50%) 0px 0px 4px 0px;
+  /* 임의의 크기 지정 */
+  height: 400px;
+  width: 300px;
+}
+
+.mentiview__reviewtitle {
+  height: 30px;
+  width: 110px;
+  margin-left: 20px;
+  margin-bottom: 10px;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 5px;
+  background-color: #49b6ff;
+  color: white;
+}
+
+.mentiview__reviewtitle p {
+  height: 20px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.mentiview__reviewtitle span {
+  font-size: 12px;
+}
+
+.mentiview__reviewlist {
+  flex-basis: 70%;
+  border-top: lightgrey 2px solid;
+  margin: 20px 20px;
+  margin-top: 0px;
+  padding-top: 30px;
+  box-sizing: border-box;
+}
+
+.mentiviewcomment__list {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 4px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.mentiviewcomment__image {
+  border-radius: 10px;
+  vertical-align: middle;
+  height: 20px;
+  width: 20px;
+}
+
+.mentiviewcomment__writer {
+  text-align: left;
+  margin: 0 5px;
+}
+
+.mentiviewcomment__content {
+  flex-basis: 20%;
+  /* white-space: nowrap; */
+  text-overflow: ellipsis;
+  flex-grow: 1;
+}
+
+.mentiviewcomment__date {
+  font-size: 10px;
+}
+
+.mentiviewcomment__like {
+  font-size: 10px;
+}

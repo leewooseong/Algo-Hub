@@ -20,51 +20,30 @@ export default class RegisterBody extends Component {
   closeModalSuccess = () => {
     this.setState({ modalOpen: false });
     const { history } = this.props;
-    history.push("/");
-    window.location.reload();
+    history.push("/auth/login");
   };
 
   // 회원 추가
   addUser = () => {
     const url = "/api/signup";
     const formData = new FormData(); // 서버로 보낼 데이터
-    // hard coding data...
-    // const response = {
-    //   statusCode: 200,
-    //   message: "Success",
-    // };
 
     formData.append("m_email", this.email);
     formData.append("m_pwd", this.password);
     formData.append("m_pwd_", this.confirmPassword);
     formData.append("m_name", this.name);
-    // dummy data...
-    // formData.append("m_age", 1);
     formData.append(
       "m_age",
       `${this.year}.${this.month ? this.month : 1}.${this.day ? this.day : 1}`
     );
     formData.append("m_tel", this.phoneNumber);
 
-    // 데이터의 값이 비었다면 체크해주고 작성해주도록 한다.
-    // if (!this.email) {
-    // }
+    // 테스트용
     console.log(this.email);
     console.log(this.password);
     console.log(this.confirmPassword);
     console.log(this.name);
     console.log(this.phoneNumber);
-
-    // if (
-    //   this.m_email == undefined ||
-    //   this.password == undefined ||
-    //   this.confirmPassword == undefined ||
-    //   this.name == undefined ||
-    //   this.phoneNumber == undefined
-    // ) {
-    //   this.setState({ modalContent: "비어 있는 콘텐츠가 있습니다." });
-    //   return axios.post("/api/error", formData);
-    // }
 
     if (this.password != this.confirmPassword) {
       this.setState({ modalContent: "비밀번호가 일치하지 않습니다." });
@@ -105,13 +84,9 @@ export default class RegisterBody extends Component {
     this.openModal();
   };
 
-  // 렌더링
   render() {
-    // console.log(this.state.modalOpen);
-    // console.log(this.state.response);
     return (
       <form onSubmit={this.handleSubmit}>
-        {/* <h2>you are in Register page.</h2> */}
         <h3 className="register first fadeIn">Sign Up</h3>
         <div className="fadeIn">
           <label htmlFor="name" className="subtitle">
@@ -275,12 +250,6 @@ export default class RegisterBody extends Component {
         {/* <button>Sign Up</button> */}
         <React.Fragment>
           <button className="fourth">Sign Up</button>
-          {/* {console.log(
-            "상태코드: ",
-            this.state.response
-              ? this.state.response.statusCode
-              : this.state.response
-          )} */}
           {this.state.response.statusCode == 200 ? (
             <Modal
               open={this.state.modalOpen}

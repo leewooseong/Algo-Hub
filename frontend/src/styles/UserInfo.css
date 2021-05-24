@@ -1,0 +1,79 @@
+/* up */
+.mentor__container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.mentorinfo__container {
+  display: flex;
+  width: 30vw;
+  padding: 20px 20px 0;
+  border: 1px solid var(--box-color);
+  border-radius: 20px;
+  margin: 5px;
+}
+
+.profile__image {
+  padding: 10px;
+  width: 10vw;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.mentor__image {
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.mentor__score {
+  display: inline-block;
+  font-size: 0.8em;
+  background-color: #000;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 20px;
+}
+
+/* mentor infomation */
+.mentor__info {
+  padding: 10px;
+  width: 25vw;
+}
+.mentor__name {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+.menti__number {
+  color: blue;
+}
+.mentor__intro {
+  padding: 20px 0;
+}
+.activity__list {
+  display: inline-block;
+}
+.activity__list:nth-child(1) {
+  margin-right: 10px;
+}
+
+.subscribe__btn {
+  display: inline-block;
+  width: 80%;
+  border-radius: 5px;
+  background-color: lightcyan;
+  border: 1px solid var(--box-color);
+  padding: 5px;
+  margin: 10px 0;
+}
+
+@media (max-width: 1300px) {
+  .mentor__container {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+  }
+  .mentorinfo__container {
+    width: 90%;
+  }
+}

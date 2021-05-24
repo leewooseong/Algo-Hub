@@ -1,5 +1,7 @@
 import axios from "axios";
 import React, { Component } from "react";
+import $ from "jquery";
+import { } from "jquery.cookie";
 // import "../../styles/.css";
 
 export default class Login extends Component {
@@ -15,35 +17,47 @@ export default class Login extends Component {
     formData.append("m_email", this.email);
     formData.append("m_pwd", this.password);
 
+    const config = {
+      headers: {
+        "content-type": "application/json",
+        withCredentials: true,
+      },
+    };
+
     axios
-      .post("/api/auth/login", formData)
+      .post("/api/auth/login", formData, config)
       .then((res) => {
-        console.log("로그인 성공", res);
-        // 로그인 성공 시 아래의 작업 수행
-        // console.log(this.props);
-        // const { history } = this.props;
-        // history.push("/");
-        // window.location.reload();
+        console.log($.cookie("JSESSIONID"));
+        if (res.data.message) {
+          // 로그인이 됐을 때 쿠키 값을 셋팅하고 성공 메세지 출력
+          // login_id라는 키값에 받아온 데이터(id)를 셋팅
+          // console.log(res);
+          // alert(res.headers["set-cookie"]);
+          // alert(res.data.message);
+          // 로그인 성공 시 아래의 작업 수행
+          // const { history } = this.props;
+          // history.push("/");
+          // window.location.reload();
+        } else {
+          alert("로그인 실패");
+        }
       })
       .catch((err) => {
         console.log("로그인 실패", err);
         // window.location.reload();
       });
-
+    // axios.get("/api/logout");
     // dummy data...
     // const res = {
     //   statusCode: 200,
     //   message: "Success",
     //   data: "abcdefghijklmnopqrstuvwxyz",
     // };
-
-    // 로그인 성공 시 아래의 작업 수행
-    // console.log(this.props);
-    // const { history } = this.props;
-    // history.push("/");
-    // window.location.reload();
-    // 이후 axios를 이용해 header에 token 추가...
   };
+
+  componentDidMount() {
+    console.log("쿠키: ", $.cookie("JSESSIONID"));
+  }
 
   render() {
     return (
