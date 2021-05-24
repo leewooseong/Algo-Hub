@@ -23,10 +23,16 @@
             m_p_intro
         )
         values(
-            '기본 이미지 경로',
-            ''
+            '기본 프로필 이미지 경로',
+            '자기 소개글을 작성해 보세요'
         );
     </insert>
+
+    <select id="getMemberID" parameterType="algohub.domain.member.MemberID" resultType="algohub.domain.member.MemberID">
+        select m_name, m_email
+        from member
+        where m_name=#{m_name} or m_email=#{m_email};
+    </select>
 
     <select id="getMember" parameterType="String" resultType="algohub.domain.member.MemberInquiry">
         select member.m_id, member.m_name, member.m_email, member_profile.m_p_image

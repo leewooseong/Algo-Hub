@@ -1,19 +1,14 @@
 package algohub.controller.login;
 
-import algohub.api.DefaultRes;
-import algohub.api.ResponseMessage;
-import algohub.api.StatusCode;
 import algohub.domain.member.MemberLogin;
 import algohub.service.login.LoginService;
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
+
 
 @SuppressWarnings("unchecked")
 @CrossOrigin(origins = "localhost:8080")
@@ -29,17 +24,27 @@ public class LoginController {
 
     // 로그인
     @PostMapping("/api/auth/login")
-    public ResponseEntity login(@ModelAttribute MemberLogin memberLogin, HttpSession session) throws Exception {
-        boolean result = service.login(memberLogin);
-        ResponseEntity responseEntity;
+    public Map<String, Object> login(@ModelAttribute MemberLogin memberLogin, HttpSession session) throws Exception {
+        Map<String, Object> responseMap = new HashMap<>();
+        boolean result = service.login(memberLogin, session);
         if (result == false) {
-            responseEntity = new ResponseEntity(DefaultRes.res(
-                    StatusCode.NOT_FOUND, ResponseMessage.LOGIN_FAIL), HttpStatus.NOT_FOUND);
+            responseMap.put("statusCode", Response.SC_NOT_FOUND);
+            responseMap.put("message", "로그인 실패");
         } else {
-            //session.setAttribute("user", result.getM_email());
-            responseEntity = new ResponseEntity(DefaultRes.res(
-                    StatusCode.OK, ResponseMessage.LOGIN_SUCCESS), HttpStatus.OK);
+            responseMap.put("statusCode", Response.SC_OK);
+            responseMap.put("message", "로그인 완료");
         }
-        return responseEntity;
+        return responseMap;
+    }
+
+    @GetMapping("/api/logout")
+    public String logOut(HttpSession session) {
+        session.invalidate();
+        return "로그 아웃.";
+    }
+
+    @GetMapping("/api/session")
+    public String test(HttpSession session) {
+        return (String) session.getAttribute("user");
     }
 }

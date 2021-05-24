@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="algohub.repository.login.LoginMapper">
     <select id="login" parameterType="algohub.domain.member.MemberLogin" resultType="algohub.domain.member.MemberLogin">
-        select m_email, m_pwd from member
+        select m_email, m_pwd, m_name from member
         where m_email = #{m_email};
     </select>
 </mapper>
