@@ -1,0 +1,21 @@
+/* 멘토 정보 박스 가장 큰 껍데기 */
+.mentiview__mentonoticebox {
+  grid-row: 1/2;
+  grid-column: 2;
+  display: flex;
+  flex-flow: nowrap column;
+  justify-content: center;
+  border-radius: 14px;
+  box-shadow: rgb(0 0 0 / 50%) 0px 0px 4px 0px;
+  /* 임의의 크기 지정 */
+  height: 200px;
+  width: 40vw;
+}
+
+.mentiview__noticetitle {
+  height: 30px;
+  width: 110px;
+  margin-left: 20px;
+  line-height: 30px;
+  font-weight: bold;
+}

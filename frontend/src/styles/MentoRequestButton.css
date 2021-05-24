@@ -1,0 +1,30 @@
+.unShowButton {
+  display: none;
+  font-size: 100px;
+}
+
+.mentorequestbutton__notallow {
+  width: 100px;
+  height: 50px;
+  flex-basis: 20%;
+  margin: 0 auto;
+  background-color: #49b6ff;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 18px;
+  font-weight: bolder;
+}
+
+.mentorequestbutton__allow {
+  width: 100px;
+  height: 50px;
+  flex-basis: 20%;
+  margin: 0 auto;
+  background-color: lightgrey;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 18px;
+  font-weight: bolder;
+}

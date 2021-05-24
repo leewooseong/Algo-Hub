@@ -1,0 +1,81 @@
+/* 멘토 정보 박스 가장 큰 껍데기 */
+.mentiview__mentoinfobox {
+  /* grid-column: 1; */
+  /* grid-row: 0-1; */
+  display: flex;
+  flex-flow: nowrap column;
+  justify-content: center;
+  border-radius: 14px;
+  box-shadow: rgb(0 0 0 / 50%) 0px 0px 4px 0px;
+  /* 임의의 크기 지정 */
+  height: 200px;
+  width: 300px;
+}
+
+/* 재사용 가능한 유저 정보 컴포넌트에 대한 껍데기 */
+.mentiview__userinfo {
+  display: flex;
+  flex-basis: 30%;
+  flex-direction: row;
+  padding: 0 20px;
+  align-content: center;
+  height: 40%;
+  width: 80%;
+}
+
+.mentiview__userimage {
+  height: 70px;
+  width: 70px;
+}
+
+.mentiview__usertext {
+  box-sizing: border-box;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
+.mentiview__username {
+  font-weight: bold;
+}
+
+.mentiview__subscribe {
+  font-size: 12px;
+  font-weight: bold;
+  color: #49b6ff;
+}
+
+.mentiview__postinfo {
+  padding-top: 10px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.mentiview__mentointro {
+  flex-basis: 20%;
+  padding: 10px 20px;
+  text-align: left;
+  vertical-align: middle;
+  font-weight: bold;
+}
+
+.mentiview__followbutton {
+  flex-basis: 20%;
+  margin: 0 20px;
+  background-color: #49b6ff;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 18px;
+  font-weight: bolder;
+}
+
+.mentiview__followingbutton {
+  flex-basis: 20%;
+  margin: 0 20px;
+  background-color: lightgrey;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 18px;
+  font-weight: bolder;
+}
