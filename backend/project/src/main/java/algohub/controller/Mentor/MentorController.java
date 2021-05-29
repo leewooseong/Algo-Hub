@@ -31,7 +31,7 @@ public class MentorController {
         boolean state = service.mentorRequest(session);
         if (state == false) {
             responseMap.put("statusCode", Response.SC_UNAUTHORIZED);
-            responseMap.put("message", "로그인 필요");
+            responseMap.put("message", "로그인 필요 또는 이미 신청한 회원");
         } else {
             responseMap.put("statusCode", Response.SC_OK);
             responseMap.put("message", "멘토 신청 완료");
@@ -87,9 +87,15 @@ public class MentorController {
     @PostMapping("/api/mentoring/subscribe")
     public Map<String, Object> subscribeMentor(@RequestParam String m_name, HttpSession session) {
         Map<String, Object> responseMap = new HashMap<>();
-        service.subscribeMentor(m_name, session);
-        responseMap.put("statusCode", Response.SC_OK);
-        responseMap.put("message", "멘토 구독 완료");
+        boolean state = service.subscribeMentor(m_name, session);
+
+        if (state == false) {
+            responseMap.put("statusCode", Response.SC_BAD_REQUEST);
+            responseMap.put("message", "이미 구독한 멘토");
+        } else {
+            responseMap.put("statusCode", Response.SC_OK);
+            responseMap.put("message", "멘토 구독 완료");
+        }
         return responseMap;
     }
 

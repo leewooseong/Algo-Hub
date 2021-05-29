@@ -19,10 +19,12 @@ public class MentorService {
         this.mapper = mapper;
     }
 
-    // 멘토 신청
+    // 멘토 신청 (중복 신청 방지 수정 완료)
     public boolean mentorRequest(HttpSession session) {
         String user = (String) session.getAttribute("user");
-        if (user == null) {
+        String userState = mapper.getMemberState(user);
+
+        if (userState.equals("Y") || user == null) {
             return false;
         } else {
             mapper.putMemberState(user);
@@ -75,12 +77,20 @@ public class MentorService {
     }
 
     // 멘토 구독
-    public void subscribeMentor(String m_name, HttpSession session) {
+    public boolean subscribeMentor(String m_name, HttpSession session) {
         String user = (String) session.getAttribute("user");
         Map<String, Object> dataMap = new HashMap<>();
+
+        String subscribeState = mapper.getSubscribeState(m_name, user);
+
+        if (subscribeState != null) {
+            return false;
+        }
+
         dataMap.put("m_name", m_name);
         dataMap.put("user", user);
         mapper.subscribeMentor(dataMap);
+        return true;
     }
 
     // 멘토 게시판 글쓰기
