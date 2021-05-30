@@ -1,7 +1,9 @@
 package algohub.service.mentor;
 
+import algohub.domain.mentor.MemberSubscribe;
 import algohub.domain.mentor.MentorBoard;
 import algohub.domain.mentor.MentorInfo;
+import algohub.domain.mentor.MentorReview;
 import algohub.repository.mentor.MentorMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -106,5 +108,29 @@ public class MentorService {
 
         mapper.writeMentorBoard(dataMap);
         return true;
+    }
+
+    // 멘토 후기 작성
+    public Map<String, Object> writeMentorReview(MentorReview mentorReview, HttpSession session) {
+        String user = (String) session.getAttribute("user");
+        Map<String, Object> dataMap = new HashMap<>();
+        Map<String, Object> responseMap = new HashMap<>();
+        dataMap.put("mentorReview", mentorReview);
+        dataMap.put("user", user);
+        MemberSubscribe memberSubscribe = mapper.getMemberSubscribe(dataMap);
+        if (memberSubscribe == null) {
+            responseMap.put("state", false);
+            return responseMap;
+        }
+        mapper.writeMentorReview(dataMap);
+        String mentorRate = mapper.getMentorRate(mentorReview.getM_name());
+        responseMap.put("mentorRate", mentorRate);
+        responseMap.put("state", true);
+        return responseMap;
+    }
+
+    // 멘토 후기 조회
+    public List<MentorReview> getMentorReviewList(String m_name) {
+        return mapper.getMentorReviewList(m_name);
     }
 }

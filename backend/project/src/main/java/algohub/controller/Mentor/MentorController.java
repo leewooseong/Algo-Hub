@@ -2,6 +2,7 @@ package algohub.controller.Mentor;
 
 import algohub.domain.mentor.MentorBoard;
 import algohub.domain.mentor.MentorInfo;
+import algohub.domain.mentor.MentorReview;
 import algohub.service.mentor.MentorService;
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -116,10 +117,29 @@ public class MentorController {
 
     // 멘토 후기 작성
     @PostMapping("/api/mentors/review")
-    public Map<String, Object> mentorReviewWrite(HttpSession session) {
+    public Map<String, Object> mentorReviewWrite(@ModelAttribute MentorReview mentorReview, HttpSession session) {
         Map<String, Object> responseMap = new HashMap<>();
+        Map<String, Object> stateMap = service.writeMentorReview(mentorReview, session);
+        if (stateMap.get("state").equals(false)) {
+            responseMap.put("statusCode", Response.SC_UNAUTHORIZED);
+            responseMap.put("message", "구독한 멘토가 아님");
+        } else {
+            responseMap.put("mr_score", stateMap.get("mentorRate"));
+            responseMap.put("statusCode", Response.SC_OK);
+            responseMap.put("message", "멘토 후기 등록 완료");
+        }
+        return responseMap;
+    }
+
+    // 멘토 후기 조회
+    @GetMapping("/api/mentors/{m_name}/review")
+    public Map<String, Object> getMentorReview(@PathVariable String m_name) {
+        Map<String, Object> responseMap = new HashMap<>();
+        List<MentorReview> reviewList = service.getMentorReviewList(m_name);
+        responseMap.put("m_name", m_name);
+        responseMap.put("reviewList", reviewList);
         responseMap.put("statusCode", Response.SC_OK);
-        responseMap.put("message", "멘토 후기 등록 완료");
+        responseMap.put("message", "멘토 후기 조회 성공.");
         return responseMap;
     }
 }

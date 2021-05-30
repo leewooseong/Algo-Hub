@@ -2,6 +2,8 @@ package algohub.repository.mentor;
 
 import algohub.domain.mentor.MentorBoard;
 import algohub.domain.mentor.MentorInfo;
+import algohub.domain.mentor.MemberSubscribe;
+import algohub.domain.mentor.MentorReview;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -18,5 +20,8 @@ public interface MentorMapper {
     List<MentorBoard> getMentorPage(String m_name);
     void subscribeMentor(Map<String, Object> dataMap);
     void writeMentorBoard(Map<String, Object> dataMap);
-    // void writeMentorReview();
+    void writeMentorReview(Map<String, Object> dataMap);
+    MemberSubscribe getMemberSubscribe(Map<String, Object> dataMap);
+    List<MentorReview> getMentorReviewList(String m_name);
+    String getMentorRate(String m_name);
 }
