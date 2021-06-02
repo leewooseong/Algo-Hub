@@ -9,4 +9,12 @@
                         from member
                         where m_name = #{m_name});
     </update>
+
+    <select id="searchRoom" resultType="algohub.domain.Signaling.CodeReview">
+        select chat_id, chat_activation, (select m_name from member where m_id = m_p_id) m_name
+        from mentor_room
+        where m_p_id = (select m_id
+                          from member
+                          where m_name = #{m_name});
+    </select>
 </mapper>

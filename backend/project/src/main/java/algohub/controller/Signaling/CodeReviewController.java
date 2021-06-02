@@ -1,5 +1,6 @@
 package algohub.controller.Signaling;
 
+import algohub.domain.Signaling.CodeReview;
 import algohub.domain.Signaling.Room;
 import algohub.service.Signaling.CodeReviewService;
 import org.apache.catalina.connector.Response;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.swing.text.View;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -46,7 +48,6 @@ public class CodeReviewController {
 
         Map<String, Object> map = new HashMap<>();
         map.put("chat_id", uuid);
-        map.put("chat_activation", 'Y');
         map.put("statusCode", Response.SC_OK);
         map.put("message", HttpStatus.OK);
         return map;
@@ -62,7 +63,13 @@ public class CodeReviewController {
         String user_name = (String) session.getAttribute("user");
 
         Map<String, Object> map = new HashMap<>();
-        map.put("chat_id", uuid);
+        List<CodeReview> codeReviews = codeReviewService.searchRoom(m_name);
+        for (CodeReview codeReview : codeReviews) {
+            map.put("chat_id", codeReview.getChat_id());
+            map.put("chat_activation", codeReview.getChat_activation());
+            map.put("m_name", codeReview.getM_name());
+        }
+
         map.put("statusCode", Response.SC_OK);
         map.put("message", HttpStatus.OK);
 

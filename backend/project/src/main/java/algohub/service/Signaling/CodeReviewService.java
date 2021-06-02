@@ -1,15 +1,13 @@
 package algohub.service.Signaling;
 
+import algohub.domain.Signaling.CodeReview;
 import algohub.domain.Signaling.Room;
 import algohub.repository.Signaling.CodeReviewMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.WebSocketSession;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class CodeReviewService {
@@ -30,6 +28,10 @@ public class CodeReviewService {
         mapper.createRoom(paramMap);
     }
 
+    public List<CodeReview> searchRoom(String m_name){
+        return mapper.searchRoom(m_name);
+    }
+
     public Map<String, WebSocketSession> getClients(final Room room) {
         return Optional.ofNullable(room)
                 .map(r -> Collections.unmodifiableMap(r.getClients()))
@@ -43,4 +45,5 @@ public class CodeReviewService {
     public WebSocketSession removeClientByName(final Room room, final String name) {
         return getClients().remove(name);
     }
+
 }

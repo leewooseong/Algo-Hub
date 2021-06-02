@@ -1,8 +1,10 @@
 package algohub.repository.Signaling;
 
+import algohub.domain.Signaling.CodeReview;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -10,5 +12,5 @@ import java.util.Map;
 public interface CodeReviewMapper {
 
     void createRoom(Map<String, String> paramMap);
-
+    List<CodeReview> searchRoom(String m_name);
 }
