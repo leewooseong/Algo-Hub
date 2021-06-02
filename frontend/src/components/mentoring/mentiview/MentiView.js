@@ -14,7 +14,6 @@ const MentiView = () => {
   const mentiViewData = useAxios({ url: `/api/mentor-room/${username}` });
 
 
-
   return (
     <main className="main__section">
       <div className="mentoring__menitview">

@@ -3,7 +3,6 @@ import useCertificate from '../../../use/useCertificate'
 
 export default function ChattingRoom(data) {
   // const socket = new WebSocket("ws://" + window.location.pathname + "/signal");
-
   const certificate = useCertificate()
   const [localUserName, setlocalUserName] = useState(null)
   // const certificate = useCertificate()
@@ -14,6 +13,7 @@ export default function ChattingRoom(data) {
   // let localUserName = ''
   // data.location.state.chatId        window.location.pathname.split('/')[4]
   const localRoom = window.location.pathname.split('/')[4]
+
   const mediaConstraints = {
     audio: true,
     video: true
@@ -45,12 +45,6 @@ export default function ChattingRoom(data) {
     socket.onopen = () => {
       console.log('1. WebSocket connection opened to Room: #' + localRoom);
       // send a message to the server to join selected room with Web Socket
-
-      console.log(`send to server:
-        from: ${localUserName},
-        type: "join",
-        data: ${localRoom}
-      `)
       sendToServer({
         from: localUserName,
         type: 'join',
@@ -231,6 +225,7 @@ export default function ChattingRoom(data) {
   }
 
   return (
-    <div>hi</div>
+    <div>hi
+    </div>
   )
 }
