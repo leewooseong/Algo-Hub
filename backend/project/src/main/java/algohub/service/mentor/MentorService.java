@@ -1,7 +1,9 @@
 package algohub.service.mentor;
 
+import algohub.domain.mentor.MemberSubscribe;
 import algohub.domain.mentor.MentorBoard;
 import algohub.domain.mentor.MentorInfo;
+import algohub.domain.mentor.MentorReview;
 import algohub.repository.mentor.MentorMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,10 +21,12 @@ public class MentorService {
         this.mapper = mapper;
     }
 
-    // 멘토 신청
+    // 멘토 신청 (중복 신청 방지 수정 완료)
     public boolean mentorRequest(HttpSession session) {
         String user = (String) session.getAttribute("user");
-        if (user == null) {
+        String userState = mapper.getMemberState(user);
+
+        if (userState.equals("Y") || user == null) {
             return false;
         } else {
             mapper.putMemberState(user);
@@ -75,12 +79,20 @@ public class MentorService {
     }
 
     // 멘토 구독
-    public void subscribeMentor(String m_name, HttpSession session) {
+    public boolean subscribeMentor(String m_name, HttpSession session) {
         String user = (String) session.getAttribute("user");
         Map<String, Object> dataMap = new HashMap<>();
+
+        String subscribeState = mapper.getSubscribeState(m_name, user);
+
+        if (subscribeState != null) {
+            return false;
+        }
+
         dataMap.put("m_name", m_name);
         dataMap.put("user", user);
         mapper.subscribeMentor(dataMap);
+        return true;
     }
 
     // 멘토 게시판 글쓰기
@@ -96,5 +108,29 @@ public class MentorService {
 
         mapper.writeMentorBoard(dataMap);
         return true;
+    }
+
+    // 멘토 후기 작성
+    public Map<String, Object> writeMentorReview(MentorReview mentorReview, HttpSession session) {
+        String user = (String) session.getAttribute("user");
+        Map<String, Object> dataMap = new HashMap<>();
+        Map<String, Object> responseMap = new HashMap<>();
+        dataMap.put("mentorReview", mentorReview);
+        dataMap.put("user", user);
+        MemberSubscribe memberSubscribe = mapper.getMemberSubscribe(dataMap);
+        if (memberSubscribe == null) {
+            responseMap.put("state", false);
+            return responseMap;
+        }
+        mapper.writeMentorReview(dataMap);
+        String mentorRate = mapper.getMentorRate(mentorReview.getM_name());
+        responseMap.put("mentorRate", mentorRate);
+        responseMap.put("state", true);
+        return responseMap;
+    }
+
+    // 멘토 후기 조회
+    public List<MentorReview> getMentorReviewList(String m_name) {
+        return mapper.getMentorReviewList(m_name);
     }
 }

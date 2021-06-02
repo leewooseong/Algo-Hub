@@ -2,6 +2,7 @@ package algohub.controller.Mentor;
 
 import algohub.domain.mentor.MentorBoard;
 import algohub.domain.mentor.MentorInfo;
+import algohub.domain.mentor.MentorReview;
 import algohub.service.mentor.MentorService;
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class MentorController {
         boolean state = service.mentorRequest(session);
         if (state == false) {
             responseMap.put("statusCode", Response.SC_UNAUTHORIZED);
-            responseMap.put("message", "로그인 필요");
+            responseMap.put("message", "로그인 필요 또는 이미 신청한 회원");
         } else {
             responseMap.put("statusCode", Response.SC_OK);
             responseMap.put("message", "멘토 신청 완료");
@@ -87,9 +88,15 @@ public class MentorController {
     @PostMapping("/api/mentoring/subscribe")
     public Map<String, Object> subscribeMentor(@RequestParam String m_name, HttpSession session) {
         Map<String, Object> responseMap = new HashMap<>();
-        service.subscribeMentor(m_name, session);
-        responseMap.put("statusCode", Response.SC_OK);
-        responseMap.put("message", "멘토 구독 완료");
+        boolean state = service.subscribeMentor(m_name, session);
+
+        if (state == false) {
+            responseMap.put("statusCode", Response.SC_BAD_REQUEST);
+            responseMap.put("message", "이미 구독한 멘토");
+        } else {
+            responseMap.put("statusCode", Response.SC_OK);
+            responseMap.put("message", "멘토 구독 완료");
+        }
         return responseMap;
     }
 
@@ -110,10 +117,29 @@ public class MentorController {
 
     // 멘토 후기 작성
     @PostMapping("/api/mentors/review")
-    public Map<String, Object> mentorReviewWrite(HttpSession session) {
+    public Map<String, Object> mentorReviewWrite(@ModelAttribute MentorReview mentorReview, HttpSession session) {
         Map<String, Object> responseMap = new HashMap<>();
+        Map<String, Object> stateMap = service.writeMentorReview(mentorReview, session);
+        if (stateMap.get("state").equals(false)) {
+            responseMap.put("statusCode", Response.SC_UNAUTHORIZED);
+            responseMap.put("message", "구독한 멘토가 아님");
+        } else {
+            responseMap.put("mr_score", stateMap.get("mentorRate"));
+            responseMap.put("statusCode", Response.SC_OK);
+            responseMap.put("message", "멘토 후기 등록 완료");
+        }
+        return responseMap;
+    }
+
+    // 멘토 후기 조회
+    @GetMapping("/api/mentors/{m_name}/review")
+    public Map<String, Object> getMentorReview(@PathVariable String m_name) {
+        Map<String, Object> responseMap = new HashMap<>();
+        List<MentorReview> reviewList = service.getMentorReviewList(m_name);
+        responseMap.put("m_name", m_name);
+        responseMap.put("reviewList", reviewList);
         responseMap.put("statusCode", Response.SC_OK);
-        responseMap.put("message", "멘토 후기 등록 완료");
+        responseMap.put("message", "멘토 후기 조회 성공.");
         return responseMap;
     }
 }

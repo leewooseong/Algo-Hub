@@ -47,4 +47,5 @@ public class LoginController {
     public String test(HttpSession session) {
         return (String) session.getAttribute("user");
     }
+
 }

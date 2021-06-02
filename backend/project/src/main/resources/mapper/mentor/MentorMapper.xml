@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="algohub.repository.mentor.MentorMapper">
+
     <select id="getMemberState" parameterType="String" resultType="String">
         select m_p_state from member m, member_profile mp
-        where m.m_id = mp.m_p_id and m.m_name = #{user}
+        where m.m_id = mp.m_p_id and m.m_name = #{user};
+    </select>
+
+    <select id="getSubscribeState" parameterType="String" resultType="String">
+        select * from
+        (select distinct ms.m_p_id as mentee
+        from mentor_room mr, member_subscribe ms,
+            (select mp.m_p_id from member m, member_profile mp where m.m_id = mp.m_p_id and m.m_name = #{m_name}) T1
+        where mr.mr_id = ms.mr_id and T1.m_p_id = mr.m_p_id) T2
+        where T2.mentee
+            in (select mp.m_p_id from member m, member_profile mp where m.m_id = mp.m_p_id and m.m_name = #{user});
+
     </select>
 
     <update id="putMemberState" parameterType="String">
@@ -112,5 +124,68 @@
                 date_format(now(), '%y.%m.%d %H:%i')
             from member m, member_profile mp, mentor_room mr
             where m.m_name = #{user} and m.m_id = mp.m_p_id and mp.m_p_id = mr.m_p_id;
+
+        update member_profile mp, member m
+        set mp.post_number = mp.post_number + 1
+        where m.m_name = #{user} and m.m_id = mp.m_p_id;
     </insert>
+
+    <insert id="writeMentorReview" parameterType="hashMap">
+        insert into mentor_room_review(
+            mr_id,
+            ms_id,
+            m_p_id,
+            mr_r_content,
+            mr_r_date,
+            mr_r_like
+        ) select distinct
+            T1.mr_id, T1.ms_id, T1.m_p_id,
+            #{mentorReview.mr_r_content},
+            date_format(now(), '%y.%m.%d %H:%i'),
+            #{mentorReview.mr_r_like}
+        from
+            (select distinct ms.mr_id, ms.ms_id, ms.m_p_id
+                from member m, member_profile mp, mentor_room mr, member_subscribe ms
+                where m.m_id = mp.m_p_id and m.m_name = #{user} and mp.m_p_id = ms.m_p_id) T1,
+            (select mr.mr_id from member m, member_profile mp, mentor_room mr
+                where m.m_id = mp.m_p_id and m.m_name = #{mentorReview.m_name} and mp.m_p_id = mr.m_p_id) T2
+        where T1.mr_id = T2.mr_id;
+
+        update member m, member_profile mp, mentor_room mr, mentor_room_review mre
+        set mr.mr_score = (select * from (select AVG(mr_r_like)
+                            from member m, member_profile mp, mentor_room mr, mentor_room_review mre
+                            where m.m_id = mp.m_p_id and m.m_name = #{mentorReview.m_name} and mr.mr_id = mre.mr_id) T)
+        where m.m_id = mp.m_p_id and m.m_name = #{mentorReview.m_name} and mp.m_p_id = mr.m_p_id;
+    </insert>
+
+    <select id="getMemberSubscribe" parameterType="hashMap" resultType="algohub.domain.mentor.MemberSubscribe">
+        select distinct
+        T1.mr_id, T1.m_p_id
+        from
+            (select distinct ms.mr_id, ms.ms_id, ms.m_p_id
+                from member m, member_profile mp, mentor_room mr, member_subscribe ms
+                where m.m_id = mp.m_p_id and m.m_name = #{user} and mp.m_p_id = ms.m_p_id) T1,
+            (select mr.mr_id from member m, member_profile mp, mentor_room mr
+                where m.m_id = mp.m_p_id and m.m_name = #{mentorReview.m_name} and mp.m_p_id = mr.m_p_id) T2
+        where T1.mr_id = T2.mr_id;
+    </select>
+
+    <select id="getMentorReviewList" parameterType="String" resultType="algohub.domain.mentor.MentorReview">
+        select distinct T1.mr_r_id, T1.mr_r_like, T1.mr_r_content, T1.mr_r_date, T2.m_name
+        from
+            (select mr_r_id, mr_r_like, mr_r_content, mr_r_date, mre.m_p_id
+                from member m, member_profile mp, mentor_room mr, member_subscribe ms, mentor_room_review mre
+                where m.m_id = mp.m_p_id and m.m_name = #{m_name} and mp.m_p_id = mr.m_p_id
+                    and mr.mr_id = ms.mr_id and ms.ms_id = mre.ms_id) T1,
+            (select m.m_name, mp.m_p_id
+                from member m, member_profile mp
+                where m.m_id = mp.m_p_id) T2
+        where T1.m_p_id = T2.m_p_id;
+    </select>
+
+    <select id="getMentorRate" parameterType="hashMap" resultType="String">
+        select mr_score
+        from member m, member_profile mp, mentor_room mr
+        where m.m_id = mp.m_p_id and m.m_name = #{m_name} and mp.m_p_id = mr.m_p_id;
+    </select>
 </mapper>

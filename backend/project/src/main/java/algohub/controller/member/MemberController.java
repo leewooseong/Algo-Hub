@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -59,5 +60,25 @@ public class MemberController {
         ResponseEntity responseEntity = new ResponseEntity(DefaultRes.res(
                 StatusCode.OK, ResponseMessage.READ_USER, memberProfile), HttpStatus.OK);
         return responseEntity;
+    }
+
+    // 사용자 인증
+    // API 문서에는 없지만 유저 프로필 사진 주소도 가져오도록 했습니다.
+    @GetMapping("/api/auth/me")
+    public Map<String, Object> getUserData(HttpSession session) throws Exception {
+        Map<String, Object> responseMap = new HashMap<>();
+        String user = (String) session.getAttribute("user");
+        MemberProfile userData = memberService.getMemberProfile(user);
+
+        if (userData == null) {
+            responseMap.put("statusCode", Response.SC_NOT_FOUND);
+            responseMap.put("message", "사용자 정보 없음.");
+        } else {
+            responseMap.put("statusCode", Response.SC_OK);
+            responseMap.put("message", "사용자 정보 접근 성공.");
+            responseMap.put("data", userData);
+        }
+
+        return responseMap;
     }
 }
