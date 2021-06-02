@@ -1,5 +1,4 @@
-import axios, { Fragment } from 'axios'
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import UserInfo from './UserInfo'
 
 import useAxios from '../../../use/useAxios'
@@ -9,7 +8,7 @@ export default function MentorMentiInfo() {
   return (
     <>
       <div className="mentor__container">
-        {data && data.data.statusCode != 404 && data.data.mentorList.map(mentor =>
+        {data && data.data.statusCode !== 404 && data.data.mentorList.map(mentor =>
           <UserInfo
             key={mentor.m_id}
             m_id={mentor.m_id}

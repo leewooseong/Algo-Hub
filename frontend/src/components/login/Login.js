@@ -7,12 +7,6 @@ import { } from "jquery.cookie";
 export default class Login extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
-    const data = {
-      m_email: this.email,
-      m_pwd: this.password,
-    };
-
-    // console.log(data.m_email, data.m_pwd);
     const formData = new FormData();
     formData.append("m_email", this.email);
     formData.append("m_pwd", this.password);
@@ -24,11 +18,12 @@ export default class Login extends Component {
       },
     };
 
+    // $.removeCookie("JSESSIONID", { path: "/" });
     axios
       .post("/api/auth/login", formData, config)
       .then((res) => {
-        console.log($.cookie("JSESSIONID"));
-        if (res.data.message) {
+        if (res.data.statusCode === 200) {
+          alert("로그인 성공");
           // 로그인이 됐을 때 쿠키 값을 셋팅하고 성공 메세지 출력
           // login_id라는 키값에 받아온 데이터(id)를 셋팅
           // console.log(res);
@@ -38,6 +33,7 @@ export default class Login extends Component {
           // const { history } = this.props;
           // history.push("/");
           // window.location.reload();
+          console.log($.cookie("JSESSIONID"));
         } else {
           alert("로그인 실패");
         }

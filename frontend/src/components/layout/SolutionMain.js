@@ -35,7 +35,7 @@ class SolutionMain extends React.Component {
   }
 
   render() {
-    const { writer, comments } = this.state;
+    const { writer } = this.state;
     return (
       <section className="main__section">
         <h2 className="section__title">

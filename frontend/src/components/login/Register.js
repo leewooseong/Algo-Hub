@@ -45,7 +45,7 @@ export default class RegisterBody extends Component {
     console.log(this.name);
     console.log(this.phoneNumber);
 
-    if (this.password != this.confirmPassword) {
+    if (this.password !== this.confirmPassword) {
       this.setState({ modalContent: "비밀번호가 일치하지 않습니다." });
       return axios.post("/api/error", formData);
     }
@@ -250,7 +250,7 @@ export default class RegisterBody extends Component {
         {/* <button>Sign Up</button> */}
         <React.Fragment>
           <button className="fourth">Sign Up</button>
-          {this.state.response.statusCode == 200 ? (
+          {this.state.response.statusCode === 200 ? (
             <Modal
               open={this.state.modalOpen}
               close={this.closeModalSuccess}

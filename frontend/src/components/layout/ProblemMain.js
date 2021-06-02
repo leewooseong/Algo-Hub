@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import Problem from '../algorithm/Problem'
+import '../../styles/ProblemMain.css'
 import { Link } from 'react-router-dom'
 
 class ProblemMain extends React.Component {
@@ -28,7 +29,7 @@ class ProblemMain extends React.Component {
   }
 
   render() {
-    const { isLoading, pcategory, pnumber, problemList } = this.state
+    const { isLoading, pnumber, problemList } = this.state
 
     return (
       <main className="App__main">

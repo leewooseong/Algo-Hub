@@ -4,7 +4,7 @@ import { post } from 'axios'
 class SolutionWriting extends React.Component {
   state = {
     a_id: this.props.location.state['a_id'],
-    m_name: 'user2',
+    // m_name: 'TestUser',
     language: '',
     content: '',
     isForm: true
@@ -28,7 +28,7 @@ class SolutionWriting extends React.Component {
     const url = '/api/solution/writing'
     const formData = new FormData();
     formData.append('a_id', this.state.a_id)
-    formData.append('m_name', this.state.m_name)
+    // formData.append('m_name', this.state.m_name)
     formData.append('code', this.state.content)
     formData.append('language', this.state.language)
 

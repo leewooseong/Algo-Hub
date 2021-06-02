@@ -1,0 +1,36 @@
+.button__liveon,
+.button__liveoff {
+  margin-left: -20px;
+  margin-top: 10px;
+  height: 20px;
+  width: 22%;
+}
+
+.button__liveon {
+  background-color: red;
+  border: none;
+  color: white;
+}
+
+.button__liveoff {
+  background-color: lightgray;
+  border: none;
+  color: white;
+}
+
+.button__liveon span,
+.button__liveoff span {
+  line-height: 20px;
+  vertical-align: top;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.button__liveon img,
+.button__liveoff img {
+  display: inline;
+  line-height: 25px;
+  vertical-align: middle;
+  width: 20px;
+  height: 20px;
+}

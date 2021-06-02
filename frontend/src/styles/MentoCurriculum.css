@@ -1,0 +1,46 @@
+/* 멘토 정보 박스 가장 큰 껍데기 */
+.mentiview__mentocurriculumbox {
+  margin-bottom: 10px;
+  margin-left: 20px;
+  padding: 5px 0;
+  height: 27%;
+  width: 90%;
+  display: flex;
+  flex-flow: nowrap column;
+  justify-content: center;
+  border-radius: 14px;
+  box-shadow: rgb(0 0 0 / 50%) 0px 0px 4px 0px;
+}
+
+/* 커리큘럼 세부페이지 */
+.mentiview__mentocurriculum {
+  height: 80%;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-flow: nowrap column;
+  justify-content: center;
+  border-radius: 14px;
+  box-shadow: rgb(0 0 0 / 50%) 0px 0px 4px 0px;
+}
+
+.mentiview__curriculumtitle {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: lightgrey 2px solid;
+  height: 30px;
+  margin-left: 20px;
+  margin-right: 20px;
+  line-height: 30px;
+  font-weight: bold;
+}
+
+.curriculum__titledetail {
+  margin: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px lightgray solid;
+  font-size: 40px;
+  font-weight: bold;
+  line-height: 40px;
+}

@@ -1,6 +1,6 @@
 import React from "react";
 import Header from '../components/layout/Header'
-import Appbar from '../components/layout/Appbar'
+// import Appbar from '../components/layout/Appbar'
 import AlgorithmMain from '../components/layout/AlgorithmMain'
 import ProblemMain from '../components/layout/ProblemMain'
 import SolutionMain from '../components/layout/SolutionMain'

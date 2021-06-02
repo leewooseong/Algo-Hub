@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 
 const UserInfo = ({
   m_name,
@@ -9,11 +8,11 @@ const UserInfo = ({
   classname,
 }) => {
   return (
-    <div className={classname ? classname + "__userinfo" : "default__userinfo"}>
+    <>
       <img
         className={classname ? classname + "__userimage" : "default__userimage"}
         src={m_p_image}
-        alt="default profile image"
+        alt="default profileimage"
       />
       <div
         className={classname ? classname + "__usertext" : "default__usertext"}
@@ -36,7 +35,7 @@ const UserInfo = ({
           게시물: {post_number}개 댓글: {cm_number}개
         </p>
       </div>
-    </div>
+    </>
   );
 };
 
