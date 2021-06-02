@@ -1,18 +1,11 @@
 import { useState, useEffect } from 'react'
 import useCertificate from '../../../use/useCertificate'
 
-export default function ChattingRoom(data) {
-  // const socket = new WebSocket("ws://" + window.location.pathname + "/signal");
-  const certificate = useCertificate()
-  const [localUserName, setlocalUserName] = useState(null)
-  // const certificate = useCertificate()
-  // const [socket, setSocket] = useState(new WebSocket("ws://localhost:8080/signal"))
-
-
+export default function ChattingRoom() {
   const socket = new WebSocket("ws://localhost:8080/signal")
-  // let localUserName = ''
-  // data.location.state.chatId        window.location.pathname.split('/')[4]
-  const localRoom = window.location.pathname.split('/')[4]
+  const certificate = useCertificate()
+  const [localUserName, setlocalUserName] = useState(null)  // 현재 사용자
+  const localRoom = window.location.pathname.split('/')[4]  // 
 
   const mediaConstraints = {
     audio: true,
@@ -50,7 +43,7 @@ export default function ChattingRoom(data) {
         type: 'join',
         data: localRoom
       })
-      console.log('sendtoserver')
+      console.log('2. SendToServer')
     }
 
     socket.onmessage = function (msg) {
@@ -145,8 +138,9 @@ export default function ChattingRoom(data) {
     }
   }
 
-  function handleAnswerMessage() {
-
+  function handleAnswerMessage(message) {
+    console.log("The peer has accepted request");
+    myPeerConnection.setRemoteDescription(message.sdp).catch(handleErrorMessage);
   }
 
   function handleNewICECandidateMessage(event) {
@@ -164,12 +158,15 @@ export default function ChattingRoom(data) {
   function handlePeerConnection(message) {
     console.log('handlePeerConnection')
     createPeerConnection();
-    // getMedia(mediaConstraints);
+    getMedia(mediaConstraints);
     if (message.data === "true") {
       myPeerConnection.onnegotiationneeded = handleNegotiationNeededEvent
     }
   }
 
+  function getMedia(a) {
+
+  }
   // #2-1. RTCPeerConnection 
   function createPeerConnection() {
     myPeerConnection = new RTCPeerConnection(peerConnectionConfig)

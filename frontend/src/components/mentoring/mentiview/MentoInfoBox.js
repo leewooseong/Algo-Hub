@@ -21,12 +21,18 @@ const MentoInfoBox = ({
     axios
       .post("/api/mentoring/subscribe", formData)
       .then((res) => {
-        alert("성공");
-        if (buttonInfo.text === "Follow") {
-          buttonInfo.setText("Following");
-        } else {
-          buttonInfo.setText("Follow");
+        if (res.data.statusCode === 200) {
+          alert("성공");
+          if (buttonInfo.text === "Follow") {
+            buttonInfo.setText("Following");
+          } else {
+            buttonInfo.setText("Follow");
+          }
         }
+        else {
+          alert("이미 구독한 멘토입니다.")
+        }
+
       })
       .catch((err) => {
         alert("실패");

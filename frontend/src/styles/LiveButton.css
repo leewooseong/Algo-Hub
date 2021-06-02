@@ -3,7 +3,8 @@
   margin-left: -20px;
   margin-top: 10px;
   height: 20px;
-  width: 22%;
+  width: 70px;
+  cursor: pointer;
 }
 
 .button__liveon {
@@ -33,4 +34,10 @@
   vertical-align: middle;
   width: 20px;
   height: 20px;
+}
+
+.live__link {
+  display:inline-block;
+  width:1px;
+  height:1px;
 }
