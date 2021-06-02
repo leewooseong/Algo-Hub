@@ -46,6 +46,7 @@ public class CodeReviewController {
 
         Map<String, Object> map = new HashMap<>();
         map.put("chat_id", uuid);
+        map.put("chat_activation", 'Y');
         map.put("statusCode", Response.SC_OK);
         map.put("message", HttpStatus.OK);
         return map;
