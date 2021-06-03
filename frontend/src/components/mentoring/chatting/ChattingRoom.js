@@ -14,14 +14,13 @@ export default function ChattingRoom() {
   const localVideo = ''
   let localStream;
   let localVideoTracks;
-
+  let myPeerConnection;
   const peerConnectionConfig = {
     'iceServers': [
       { 'urls': 'stun:stun.stunprotocol.org:3478' },
       { 'urls': 'stun:stun.l.google.com:19302' },
     ]
   };
-  let myPeerConnection;
 
   useEffect(() => {
     {
@@ -43,11 +42,11 @@ export default function ChattingRoom() {
         type: 'join',
         data: localRoom
       })
-      console.log('2. SendToServer')
     }
 
     socket.onmessage = function (msg) {
       let message = JSON.parse(msg.data)
+      console.log(msg)
       switch (message.type) {
         case "text":
           console.log('Text message from ' + message.from + ' received: ' + message.data)
@@ -66,6 +65,7 @@ export default function ChattingRoom() {
           handleNewICECandidateMessage(message.sdp);
           break;
         case "join":
+          console.log('2. Join')
           console.log('Client is starting to ' + (message.data === "true)" ? 'negotiate' : 'wait for a peer'));
           handlePeerConnection(message);
           break;
@@ -156,7 +156,8 @@ export default function ChattingRoom() {
 
   // #2. RTCPeerConnection 
   function handlePeerConnection(message) {
-    console.log('handlePeerConnection')
+    console.log('3. handlePeerConnection')
+    console.log(message)
     createPeerConnection();
     getMedia(mediaConstraints);
     if (message.data === "true") {
@@ -164,12 +165,47 @@ export default function ChattingRoom() {
     }
   }
 
-  function getMedia(a) {
-
+  function getMedia(constraints) {
+    // if (localStream) {
+    //   localStream.getTracks().forEach(track => {
+    //     track.stop();
+    //   });
+    // }
+    navigator.mediaDevices.getUserMedia(constraints)
+      .then(getLocalMediaStream).catch(handleGetUserMediaError);
   }
+
+  function getLocalMediaStream(mediaStream) {
+    // localStream = mediaStream;
+    // localVideo.srcObject = mediaStream;
+    // localStream.getTracks().forEach(track => myPeerConnection.addTrack(track, localStream));
+  }
+
+  function handleGetUserMediaError(error) {
+    console.log('navigator.getUserMedia error: ', error);
+    switch (error.name) {
+      case "NotFoundError":
+        alert("Unable to open your call because no camera and/or microphone were found.");
+        break;
+      case "SecurityError":
+      case "PermissionDeniedError":
+        // Do nothing; this is the same as the user canceling the call.
+        break;
+      default:
+        alert("Error opening your camera and/or microphone: " + error.message);
+        break;
+    }
+
+    // stop();
+  }
+
   // #2-1. RTCPeerConnection 
   function createPeerConnection() {
+    console.log('4. createPeerConnection')
     myPeerConnection = new RTCPeerConnection(peerConnectionConfig)
+    console.log(myPeerConnection)
+    console.log(socket)
+
     myPeerConnection.onicecandidate = handleICECandidateEvent
     myPeerConnection.ontrack = handleTrackEvent;
   }
@@ -222,7 +258,10 @@ export default function ChattingRoom() {
   }
 
   return (
-    <div>hi
-    </div>
+    <>
+      <h1>Realtime communication with WebRTC</h1>
+      <video autoPlay playsInline></video>
+      <button onClick={handleNegotiationNeededEvent}>offer</button>
+    </>
   )
 }
