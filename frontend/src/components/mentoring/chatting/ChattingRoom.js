@@ -11,6 +11,7 @@ export default function ChattingRoom() {
     audio: true,
     video: true
   }
+  let dataChannel = ''
   const localVideo = ''
   let localStream;
   let localVideoTracks;
@@ -62,7 +63,7 @@ export default function ChattingRoom() {
         // when a remote peer sends an ice candidate to us
         case "ice":
           console.log('Signal ICE Candidate received');
-          handleNewICECandidateMessage(message.sdp);
+          handleNewICECandidateMessage(message);
           break;
         case "join":
           console.log('2. Join')
@@ -72,7 +73,9 @@ export default function ChattingRoom() {
         default:
           handleErrorMessage('Wrong type message received from server')
       }
+
     }
+
 
     socket.onclose = function (message) {
       console.log('Socket has been closed')
@@ -103,7 +106,7 @@ export default function ChattingRoom() {
           try {
             localVideo.srcObject = localStream;
           } catch (error) {
-            localVideo.src = window.URL.createObjectURL(stream);
+            // localVideo.src = window.URL.createObjectURL(stream);
           }
 
           console.log("-- Adding stream to the RTCPeerConnection");
@@ -131,7 +134,7 @@ export default function ChattingRoom() {
             type: 'answer',
             sdp: myPeerConnection.localDescription
           });
-
+          console.log(myPeerConnection)
         })
         // .catch(handleGetUserMediaError);
         .catch(handleErrorMessage)
@@ -141,17 +144,15 @@ export default function ChattingRoom() {
   function handleAnswerMessage(message) {
     console.log("The peer has accepted request");
     myPeerConnection.setRemoteDescription(message.sdp).catch(handleErrorMessage);
+    console.log(myPeerConnection)
+    console.log(socket)
   }
 
-  function handleNewICECandidateMessage(event) {
-    if (event.candidate) {
-      sendToServer({
-        from: localUserName,
-        type: 'ice',
-        candidate: event.candidate
-      })
-      console.log('ICE Candidate Event: ICE candidate sent')
-    }
+  function handleNewICECandidateMessage(message) {
+    console.log('handleNewICECandidateMEssage')
+    let candidate = new RTCIceCandidate(message.candidate);
+    console.log("Adding received ICE candidate: " + JSON.stringify(candidate));
+    myPeerConnection.addIceCandidate(candidate).catch(handleErrorMessage);
   }
 
   // #2. RTCPeerConnection 
@@ -166,11 +167,11 @@ export default function ChattingRoom() {
   }
 
   function getMedia(constraints) {
-    // if (localStream) {
-    //   localStream.getTracks().forEach(track => {
-    //     track.stop();
-    //   });
-    // }
+    if (localStream) {
+      localStream.getTracks().forEach(track => {
+        track.stop();
+      });
+    }
     navigator.mediaDevices.getUserMedia(constraints)
       .then(getLocalMediaStream).catch(handleGetUserMediaError);
   }
@@ -203,6 +204,28 @@ export default function ChattingRoom() {
   function createPeerConnection() {
     console.log('4. createPeerConnection')
     myPeerConnection = new RTCPeerConnection(peerConnectionConfig)
+
+    // //     dataChannel = myPeerConnection.createDataChannel("dataChannel", {
+    //   reliable: true
+    // });
+    // // creating data channel
+
+    // dataChannel.onerror = function (error) {
+    //   console.log("Error occured on datachannel:", error);
+    // };
+
+    // // when we receive a message from the other peer, printing it on the console
+    // dataChannel.onmessage = function (event) {
+    //   console.log("message:", event.data);
+    // };
+
+    // dataChannel.onclose = function () {
+    //   console.log("data channel is closed");
+    // };
+
+    // myPeerConnection.ondatachannel = function (event) {
+    //   dataChannel = event.channel;
+    // };
     console.log(myPeerConnection)
     console.log(socket)
 
@@ -225,6 +248,7 @@ export default function ChattingRoom() {
 
   // #2-3. handleTrackEvent 
   function handleTrackEvent() {
+    console.log('Track Event: set stream to remote video element');
 
   }
 
@@ -257,11 +281,27 @@ export default function ChattingRoom() {
     socket.send(msgJSON)
   }
 
+  const [inputValue, setInputValue] = useState('')
+  function handleOnchange(e) {
+    setInputValue(e.target.value);
+    console.log(inputValue)
+  }
+
+  function handleOnClick(event) {
+    socket.dataChannel.send(inputValue);
+
+  }
+
   return (
     <>
-      <h1>Realtime communication with WebRTC</h1>
-      <video autoPlay playsInline></video>
-      <button onClick={handleNegotiationNeededEvent}>offer</button>
+      <main className="app__main">
+
+        <video autoPlay playsInline></video>
+        <button onClick={handleNegotiationNeededEvent}>offer</button>
+
+        <input value={inputValue} type="text" placeholder="message" onChange={handleOnchange} />
+        <button type="button" onClick={handleOnClick}>send</button>
+      </main>
     </>
   )
 }
