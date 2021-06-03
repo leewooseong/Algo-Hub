@@ -39,11 +39,11 @@ public class CodeReviewService {
     }
 
     public WebSocketSession addClient(final Room room, final String name, final WebSocketSession session) {
-        return getClients().put(name, session);
+        return room.getClients().put(name, session);
     }
 
     public WebSocketSession removeClientByName(final Room room, final String name) {
-        return getClients().remove(name);
+        return room.getClients().remove(name);
     }
 
 }
