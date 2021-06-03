@@ -15,8 +15,6 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
 
 @Component
 public class SignalHandler extends TextWebSocketHandler {
@@ -26,6 +24,8 @@ public class SignalHandler extends TextWebSocketHandler {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
     private Map<String, Room> sessionMap = new HashMap<>();
+
+    Room rm = new Room();
 
     // message types, used in signalling:
     // text message
@@ -59,7 +59,6 @@ public class SignalHandler extends TextWebSocketHandler {
             String userName = message.getFrom();
             String data = message.getData();
 
-            Room rm = new Room();
             rm.setChat_id(data);
 
             switch (message.getType()) {
@@ -73,6 +72,7 @@ public class SignalHandler extends TextWebSocketHandler {
                     Object sdp = message.getSdp();
 
                     Map<String, WebSocketSession> clients = codeReviewService.getClients(rm);
+                    System.out.println(clients);
                     for(Map.Entry<String, WebSocketSession> client : clients.entrySet())  {
                         // send messages to all clients except current user
                         if (!client.getKey().equals(userName)) {

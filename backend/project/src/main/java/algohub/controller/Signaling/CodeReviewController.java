@@ -75,4 +75,22 @@ public class CodeReviewController {
 
         return map;
     }
+
+    // 채팅방 조회
+    @GetMapping("/api/mentors/chatting/{m_name}")
+    Map<String, Object> chatting(@PathVariable("m_name") String m_name) {
+
+        Map<String, Object> map = new HashMap<>();
+        List<CodeReview> codeReviews = codeReviewService.searchRoom(m_name);
+        for (CodeReview codeReview : codeReviews) {
+            map.put("chat_id", codeReview.getChat_id());
+            map.put("chat_activation", codeReview.getChat_activation());
+            map.put("m_name", codeReview.getM_name());
+        }
+
+        map.put("statusCode", Response.SC_OK);
+        map.put("message", HttpStatus.OK);
+
+        return map;
+    }
 }
