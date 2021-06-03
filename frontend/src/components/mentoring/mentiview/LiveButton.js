@@ -37,6 +37,7 @@ const LiveButton = () => {
     checkRoom()
   }, [])
 
+  // 페이지 접근 시 채팅방 확인
   function checkRoom() {
     return axios.get(`/api/mentors/chatting/${mentor_name}`).then(function (res) {
       try {
@@ -51,9 +52,12 @@ const LiveButton = () => {
     })
   }
 
+  // 멘티 채팅방 입장
   function joinRoom() {
     return axios.get(`/api/mentors/joinRoom/${mentor_name}/${chatID}`)
   }
+
+  // 멘토 채팅방 생성
   function createRoom() {
     return axios.post('/api/mentors/createRoom')
   }
