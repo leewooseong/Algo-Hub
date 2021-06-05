@@ -133,4 +133,34 @@ public class MentorService {
     public List<MentorReview> getMentorReviewList(String m_name) {
         return mapper.getMentorReviewList(m_name);
     }
+
+    // 멘토 페이지 게시글 수정
+    public void updateMentorPost(MentorBoard mentorBoard, HttpSession session) throws Exception {
+        String user = (String) session.getAttribute("user");
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("mentorBoard", mentorBoard);
+        dataMap.put("user", user);
+        mapper.updateMentorPost(dataMap);
+    }
+
+    // 멘토 페이지 게시글 삭제
+    public void deleteMentorPost(int mb_id, HttpSession session) throws Exception {
+        mapper.deleteMentorPost(mb_id);
+    }
+
+    // 멘토 리뷰 수정
+    public void updateMentorReview(MentorReview mentorReview, HttpSession session) throws Exception {
+        String user = (String) session.getAttribute("user");
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("mentorReview", mentorReview);
+        dataMap.put("user", user);
+        mapper.updateMentorReview(dataMap);
+        mapper.updateMentorRate(mentorReview.getM_name());
+    }
+
+    // 멘토 리뷰 삭제
+    public void deleteMentorReview(String m_name, int mr_r_id, HttpSession session) throws Exception {
+        mapper.deleteMentorReview(mr_r_id);
+        mapper.updateMentorRate(m_name);
+    }
 }
