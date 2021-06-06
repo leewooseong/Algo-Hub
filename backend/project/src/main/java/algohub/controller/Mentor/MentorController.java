@@ -84,19 +84,19 @@ public class MentorController {
         return responseMap;
     }
 
-    // 멘토 구독
+    // 멘토 구독 및 취소
     @PostMapping("/api/mentoring/subscribe")
-    public Map<String, Object> subscribeMentor(@RequestParam String m_name, HttpSession session) {
+    public Map<String, Object> subscribeMentor(@RequestParam String m_name, HttpSession session) throws Exception {
         Map<String, Object> responseMap = new HashMap<>();
         boolean state = service.subscribeMentor(m_name, session);
 
+        responseMap.put("statusCode", Response.SC_OK);
         if (state == false) {
-            responseMap.put("statusCode", Response.SC_BAD_REQUEST);
-            responseMap.put("message", "이미 구독한 멘토");
+            responseMap.put("message", "멘토 구독 취소");
         } else {
-            responseMap.put("statusCode", Response.SC_OK);
             responseMap.put("message", "멘토 구독 완료");
         }
+
         return responseMap;
     }
 

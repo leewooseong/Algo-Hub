@@ -78,21 +78,21 @@ public class MentorService {
         return boardData;
     }
 
-    // 멘토 구독
-    public boolean subscribeMentor(String m_name, HttpSession session) {
+    // 멘토 구독 및 취소
+    public boolean subscribeMentor(String m_name, HttpSession session) throws Exception {
         String user = (String) session.getAttribute("user");
         Map<String, Object> dataMap = new HashMap<>();
-
-        String subscribeState = mapper.getSubscribeState(m_name, user);
-
-        if (subscribeState != null) {
-            return false;
-        }
-
         dataMap.put("m_name", m_name);
         dataMap.put("user", user);
-        mapper.subscribeMentor(dataMap);
-        return true;
+
+        String subscribeState = mapper.getSubscribeState(m_name, user);
+        if (subscribeState != null) {
+            mapper.cancelMentorSubscription(dataMap);
+            return false;
+        } else {
+            mapper.subscribeMentor(dataMap);
+            return true;
+        }
     }
 
     // 멘토 게시판 글쓰기

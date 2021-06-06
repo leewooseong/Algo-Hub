@@ -21,7 +21,13 @@ public interface MentorMapper {
     List<MentorInfo> getMentorList();
     MentorInfo getMentor(String m_name);
     List<MentorBoard> getMentorPage(String m_name);
-    void subscribeMentor(Map<String, Object> dataMap);
+
+    // 멘토 구독
+    void subscribeMentor(Map<String, Object> dataMap) throws Exception;
+
+    // 멘토 구독 취소
+    void cancelMentorSubscription(Map<String, Object> dataMap) throws Exception;
+
     void writeMentorBoard(Map<String, Object> dataMap);
     void writeMentorReview(Map<String, Object> dataMap);
     MemberSubscribe getMemberSubscribe(Map<String, Object> dataMap);
