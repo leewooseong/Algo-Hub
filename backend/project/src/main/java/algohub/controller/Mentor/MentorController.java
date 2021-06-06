@@ -182,12 +182,21 @@ public class MentorController {
     // 멘토 후기 삭제
     @DeleteMapping("/api/mentor/{m_name}/review/{mr_r_id}")
     public Map<String, Object> deleteMentorReview(@PathVariable String m_name, @PathVariable int mr_r_id,
-                                                  HttpSession session)
-            throws Exception{
+                                                  HttpSession session) throws Exception {
         Map<String, Object> responseMap = new HashMap<>();
         service.deleteMentorReview(m_name, mr_r_id, session);
         responseMap.put("statusCode", Response.SC_OK);
         responseMap.put("message", "멘토 리뷰 삭제 완료");
+        return responseMap;
+    }
+
+    // 구독한 멘토 조회
+    @GetMapping("/api/subscription-info/user/{m_id}")
+    public Map<String, Object> getSubsInfoList(@PathVariable int m_id) throws Exception {
+        Map<String, Object> responseMap = new HashMap<>();
+        responseMap.put("SubscriptionList", service.getSubsInfoList(m_id));
+        responseMap.put("statusCode", Response.SC_OK);
+        responseMap.put("message", "구독한 멘토 조회 완료");
         return responseMap;
     }
 }

@@ -25,6 +25,7 @@
 
     </select>
 
+    <!-- 멘토 신청 -->
     <update id="putMemberState" parameterType="String">
         update member m join member_profile mp on m.m_id = mp.m_p_id
         set mp.m_p_state = 'Y'
@@ -256,4 +257,14 @@
         SET mr.mr_score = IF(@RATE IS NULL, 0, @RATE)
         WHERE m.m_id = mp.m_p_id and mp.m_p_id = mr.m_p_id and m.m_name = #{m_name};
     </update>
+
+    <!-- 구독한 멘토 조회 -->
+    <select id="getSubsInfoList" parameterType="Integer" resultType="String">
+        select m.m_name from member m, member_profile mp
+        where mp.m_p_id in (select distinct mr.m_p_id from member_profile mp, mentor_room mr, member_subscribe ms
+                            where ms.m_p_id = #{m_id} and ms.mr_id = mr.mr_id
+                            order by m_p_id)
+        and m.m_id = mp.m_p_id
+        order by m_name;
+    </select>
 </mapper>

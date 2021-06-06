@@ -163,4 +163,9 @@ public class MentorService {
         mapper.deleteMentorReview(mr_r_id);
         mapper.updateMentorRate(m_name);
     }
+
+    // 구독한 멘토 조회
+    public List<String> getSubsInfoList(int m_id) throws Exception {
+        return mapper.getSubsInfoList(m_id);
+    }
 }

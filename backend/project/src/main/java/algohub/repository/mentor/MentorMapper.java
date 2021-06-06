@@ -48,4 +48,7 @@ public interface MentorMapper {
 
     // 멘토 평점 갱신
     void updateMentorRate(String m_name) throws Exception;
+
+    // 구독한 멘토 조회
+    List<String> getSubsInfoList(int m_id) throws Exception;
 }
