@@ -1,0 +1,47 @@
+html, body {
+  width: 100%;
+  display: initial;
+  margin: 0;
+  padding: 0;
+}
+
+.app__title {
+  font-weight: bold;
+  font-size: 1.5em;
+  background: #eee;
+  padding: 20px;
+  text-align: center;
+  color: #999;
+  margin-bottom: 1px;
+  box-shadow: 0 1px 0 var(--secondary-color);
+}
+
+.app__title span {
+  font-size: 1.6em;
+  color: #000;
+}
+
+.chatting__section {
+  display: flex;
+  padding: 0;
+}
+
+.video__container {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+.video__container video {
+  margin: 10px;
+}
+
+
+.chat__controller {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 6vh;
+  background-color: rgba(51, 50, 50, 0.205);
+}

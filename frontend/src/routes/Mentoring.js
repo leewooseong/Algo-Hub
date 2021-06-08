@@ -5,7 +5,6 @@ import Header from "../components/layout/Header";
 import { Route, Switch } from "react-router-dom";
 import Footer from "../components/layout/Footer";
 import MentorWriting from "../components/mentoring/mentomenti/MentorWriting";
-import ChattingRoom from "../components/mentoring/chatting/ChattingRoom"; //
 
 class Mentoring extends React.Component {
   render() {
@@ -14,7 +13,6 @@ class Mentoring extends React.Component {
         <Header />
         <Switch>
           <Route exact path="/mentoring" component={MentoMenti} />
-          <Route path="/mentoring/mentiview/:m_name/:room" component={ChattingRoom} />
           <Route path="/mentoring/mentiview/writing" component={MentorWriting} />
           <Route path="/mentoring/mentiview" component={MentiView} />
         </Switch>
