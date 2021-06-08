@@ -14,6 +14,7 @@ public class CodeReviewService {
 
     private final CodeReviewMapper mapper;
     private final Map<String, WebSocketSession> clients = new HashMap<>();
+    private final Set<Room> rooms = new TreeSet<>(Comparator.comparing(Room::getChat_id));
 
     Map<String, WebSocketSession> getClients() {
         return clients;
@@ -32,6 +33,10 @@ public class CodeReviewService {
         return mapper.searchRoom(m_name);
     }
 
+    public void exitRoom(String chat_id) {
+        mapper.exitRoom(chat_id);
+    }
+
     public Map<String, WebSocketSession> getClients(final Room room) {
         return Optional.ofNullable(room)
                 .map(r -> Collections.unmodifiableMap(r.getClients()))
@@ -46,4 +51,15 @@ public class CodeReviewService {
         return room.getClients().remove(name);
     }
 
+    public Optional<Room> findRoomByStringId(String data) {
+        return rooms.stream().filter(r -> r.getChat_id().equals(data)).findAny();
+    }
+
+    public Boolean addRoom(final Room room) {
+        return rooms.add(room);
+    }
+
+    public Boolean deleteRoom(String uuid) {
+        return rooms.remove(findRoomByStringId(uuid).orElse(null));
+    }
 }

@@ -78,21 +78,21 @@ public class MentorService {
         return boardData;
     }
 
-    // 멘토 구독
-    public boolean subscribeMentor(String m_name, HttpSession session) {
+    // 멘토 구독 및 취소
+    public boolean subscribeMentor(String m_name, HttpSession session) throws Exception {
         String user = (String) session.getAttribute("user");
         Map<String, Object> dataMap = new HashMap<>();
-
-        String subscribeState = mapper.getSubscribeState(m_name, user);
-
-        if (subscribeState != null) {
-            return false;
-        }
-
         dataMap.put("m_name", m_name);
         dataMap.put("user", user);
-        mapper.subscribeMentor(dataMap);
-        return true;
+
+        String subscribeState = mapper.getSubscribeState(m_name, user);
+        if (subscribeState != null) {
+            mapper.cancelMentorSubscription(dataMap);
+            return false;
+        } else {
+            mapper.subscribeMentor(dataMap);
+            return true;
+        }
     }
 
     // 멘토 게시판 글쓰기
@@ -132,5 +132,40 @@ public class MentorService {
     // 멘토 후기 조회
     public List<MentorReview> getMentorReviewList(String m_name) {
         return mapper.getMentorReviewList(m_name);
+    }
+
+    // 멘토 페이지 게시글 수정
+    public void updateMentorPost(MentorBoard mentorBoard, HttpSession session) throws Exception {
+        String user = (String) session.getAttribute("user");
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("mentorBoard", mentorBoard);
+        dataMap.put("user", user);
+        mapper.updateMentorPost(dataMap);
+    }
+
+    // 멘토 페이지 게시글 삭제
+    public void deleteMentorPost(int mb_id, HttpSession session) throws Exception {
+        mapper.deleteMentorPost(mb_id);
+    }
+
+    // 멘토 리뷰 수정
+    public void updateMentorReview(MentorReview mentorReview, HttpSession session) throws Exception {
+        String user = (String) session.getAttribute("user");
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("mentorReview", mentorReview);
+        dataMap.put("user", user);
+        mapper.updateMentorReview(dataMap);
+        mapper.updateMentorRate(mentorReview.getM_name());
+    }
+
+    // 멘토 리뷰 삭제
+    public void deleteMentorReview(String m_name, int mr_r_id, HttpSession session) throws Exception {
+        mapper.deleteMentorReview(mr_r_id);
+        mapper.updateMentorRate(m_name);
+    }
+
+    // 구독한 멘토 조회
+    public List<String> getSubsInfoList(int m_id) throws Exception {
+        return mapper.getSubsInfoList(m_id);
     }
 }

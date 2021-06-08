@@ -2,11 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="algohub.repository.mentor.MentorMapper">
 
+    <!-- 접속중인 유저의 m_p_id(idx) 가져오기 -->
+    <select id="findUserID" parameterType="String" resultType="String">
+        select mp.m_p_id from member m, member_profile mp
+        where m.m_name = #{user} and m.m_id = mp.m_p_id;
+    </select>
+
     <select id="getMemberState" parameterType="String" resultType="String">
         select m_p_state from member m, member_profile mp
         where m.m_id = mp.m_p_id and m.m_name = #{user};
     </select>
 
+    <!-- 해당 멘토를 구독하고 있는 접속중인 유저의 m_p_id 조회 -->
     <select id="getSubscribeState" parameterType="String" resultType="String">
         select * from
         (select distinct ms.m_p_id as mentee
@@ -18,6 +25,7 @@
 
     </select>
 
+    <!-- 멘토 신청 -->
     <update id="putMemberState" parameterType="String">
         update member m join member_profile mp on m.m_id = mp.m_p_id
         set mp.m_p_state = 'Y'
@@ -90,13 +98,19 @@
         group by T.mr_id;
     </select>
 
+    <!-- 멘토 페이지에 등록된 게시글 조회 -->
     <select id="getMentorPage" parameterType="String" resultType="algohub.domain.mentor.MentorBoard">
-        select mb_c_id, mb_title, mb_content, mb_date
+        select mb_c_id, mb_id, mb_title, mb_content, mb_date
         from mentor_board mb, member m, member_profile mp
         where m.m_name = #{m_name} and m.m_id = mp.m_p_id and mb.m_p_id = mp.m_p_id;
     </select>
 
+    <!-- 멘토 구독 -->
     <insert id="subscribeMentor" parameterType="hashMap">
+        ALTER TABLE member_subscribe AUTO_INCREMENT=1;
+        SET @CNT = 0;
+        UPDATE member_subscribe ms SET ms.ms_id = @CNT := @CNT+1;
+
         insert into member_subscribe(mr_id, m_p_id)
         values(
         (select mr.mr_id from member m, member_profile mp, mentor_room mr
@@ -105,7 +119,21 @@
                 where m.m_name = #{user} and m.m_id = mp.m_p_id)
         );
     </insert>
+    
+    <!-- 멘토 구독 취소 -->
+    <delete id="cancelMentorSubscription" parameterType="hashMap">
+        DELETE FROM member_subscribe ms
+        WHERE ms.mr_id = (SELECT mr.mr_id FROM member m, member_profile mp, mentor_room mr
+                            WHERE m.m_id = mp.m_p_id AND mr.m_p_id = mp.m_p_id AND m.m_name = #{m_name})
+            AND ms.m_p_id = (SELECT mp.m_p_id FROM member m, member_profile mp
+                                WHERE m.m_id = mp.m_p_id AND m.m_name = #{user});
 
+        ALTER TABLE member_subscribe AUTO_INCREMENT=1;
+        SET @CNT = 0;
+        UPDATE member_subscribe ms SET ms.ms_id = @CNT := @CNT+1;
+    </delete>
+
+    <!-- 멘토 게시판 글 작성 -->
     <insert id="writeMentorBoard" parameterType="hashMap">
         insert into mentor_board(
             mr_id,
@@ -130,6 +158,7 @@
         where m.m_name = #{user} and m.m_id = mp.m_p_id;
     </insert>
 
+    <!-- 멘토 후기 작성 -->
     <insert id="writeMentorReview" parameterType="hashMap">
         insert into mentor_room_review(
             mr_id,
@@ -187,5 +216,55 @@
         select mr_score
         from member m, member_profile mp, mentor_room mr
         where m.m_id = mp.m_p_id and m.m_name = #{m_name} and mp.m_p_id = mr.m_p_id;
+    </select>
+
+    <!-- 멘토 페이지 게시글 수정 -->
+    <update id="updateMentorPost" parameterType="hashMap">
+        update mentor_board
+        set mb_title = #{mentorBoard.mb_title}, mb_content = #{mentorBoard.mb_content}
+        where mb_id = #{mentorBoard.mb_id}
+    </update>
+
+    <!-- 멘토 페이지 게시글 삭제 -->
+    <delete id="deleteMentorPost" parameterType="Integer">
+        DELETE FROM mentor_board mb WHERE mb.mb_id = #{mb_id};
+        ALTER TABLE mentor_board AUTO_INCREMENT=1;
+        SET @CNT = 0;
+        UPDATE mentor_board mb SET mb.mb_id = @CNT := @CNT+1;
+    </delete>
+
+    <!-- 멘토 리뷰 수정 -->
+    <update id="updateMentorReview" parameterType="hashMap">
+        UPDATE mentor_room_review mre
+        SET mre.mr_r_like = #{mentorReview.mr_r_like}, mre.mr_r_content = #{mentorReview.mr_r_content}
+        WHERE mre.mr_r_id = #{mentorReview.mr_r_id}
+    </update>
+
+    <!-- 멘토 리뷰 삭제 -->
+    <delete id="deleteMentorReview" parameterType="Integer">
+        DELETE FROM mentor_room_review mre WHERE mre.mr_r_id = #{mr_r_id};
+        ALTER TABLE mentor_room_review AUTO_INCREMENT=1;
+        SET @CNT = 0;
+        UPDATE mentor_room_review mre SET mre.mr_r_id = @CNT := @CNT+1;
+    </delete>
+
+    <!-- 멘토 평점 갱신 (수정 및 삭제 시 사용) -->
+    <update id="updateMentorRate" parameterType="String">
+        SET @RATE := (SELECT AVG(mre.mr_r_like) FROM mentor_room_review mre, member m, member_profile mp
+                        WHERE m.m_id = mp.m_p_id and m.m_name = #{m_name});
+
+        UPDATE mentor_room mr, member m, member_profile mp
+        SET mr.mr_score = IF(@RATE IS NULL, 0, @RATE)
+        WHERE m.m_id = mp.m_p_id and mp.m_p_id = mr.m_p_id and m.m_name = #{m_name};
+    </update>
+
+    <!-- 구독한 멘토 조회 -->
+    <select id="getSubsInfoList" parameterType="Integer" resultType="String">
+        select m.m_name from member m, member_profile mp
+        where mp.m_p_id in (select distinct mr.m_p_id from member_profile mp, mentor_room mr, member_subscribe ms
+                            where ms.m_p_id = #{m_id} and ms.mr_id = mr.mr_id
+                            order by m_p_id)
+        and m.m_id = mp.m_p_id
+        order by m_name;
     </select>
 </mapper>

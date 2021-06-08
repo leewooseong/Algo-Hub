@@ -13,4 +13,5 @@ public interface CodeReviewMapper {
 
     void createRoom(Map<String, String> paramMap);
     List<CodeReview> searchRoom(String m_name);
+    void exitRoom(String chat_id);
 }

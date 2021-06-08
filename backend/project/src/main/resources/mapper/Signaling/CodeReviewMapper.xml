@@ -17,4 +17,11 @@
                           from member
                           where m_name = #{m_name});
     </select>
+
+    <update id="exitRoom" parameterType="String">
+        update mentor_room
+        set chat_id = null,
+            chat_activation = 'N'
+        where chat_id = #{chat_id};
+    </update>
 </mapper>

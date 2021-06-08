@@ -18,6 +18,10 @@ public class Room {
         this.chat_id = UUID.randomUUID().toString();
     }
 
+    public Room(String data) {
+        this.chat_id = data;
+    }
+
     public String getChat_id() {
         return chat_id;
     }
