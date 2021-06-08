@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="algohub.repository.algorithm.AlgorithmMapper">
+
+    <!-- 알고리즘 문제 검색 -->
+    <select id="searchAlgorithm" resultType="algohub.domain.algorithm.AlgorithmInfo" parameterType="String">
+        select *
+        from
+            (select a.a_id, a.p_title, a.p_link, m.m_name
+                from algorithm a, member m
+                where a.p_title like concat('%', #{search}, '%') and a.m_id = m.m_id) T1,
+            (select sc.a_id, group_concat(distinct language separator ',') as language
+                from source_code sc, language_category lc
+                where sc.l_c_id = lc.l_c_id group by sc.a_id) T2
+        where T1.a_id = T2.a_id;
+    </select>
+</mapper>
