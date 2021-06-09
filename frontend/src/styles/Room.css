@@ -7,7 +7,7 @@ html, body {
 
 .app {
   display:grid;
-  grid-template-rows: 60px minmax(90vh, auto);
+  grid-template-rows: 60px minmax(89vh, auto) 60px;
   grid-template-columns: 3.2fr 1fr;
   background-color: #000;
 }
@@ -27,12 +27,12 @@ html, body {
 .app__title {
   display: inline-block;
   font-weight: bold;
-  font-size: 1em;
+  font-size: 1.2em;
   color: rgba(238, 238, 238, 0.589);
 }
 
 .app__title span {
-  font-size: 1.4em;
+  font-size: 1.3em;
   color: rgba(255, 255, 255, 0.89);
 }
 
@@ -45,12 +45,12 @@ html, body {
 
 .video__container {
   width: 100%;
+  height: 60px;
   flex-wrap: wrap;
   display: flex;
   padding: 0 20px;
   justify-content: space-evenly;
 }
-
 .video__container video {
   margin: 10px;
 }
@@ -67,8 +67,6 @@ html, body {
   width: 480px;
   height: 360px;
   }
-
-
 .chat__controller {
   position: fixed;
   display: flex;
@@ -76,10 +74,10 @@ html, body {
   justify-content: center;
   bottom: 0;
   width: 100%;
-  height: 6vh;
+  height: 44px;
   background-color: #000;
   color: #fff;
-  padding: 20px;
+  padding: 15px;
 }
 .chat__icons {
   cursor: pointer;

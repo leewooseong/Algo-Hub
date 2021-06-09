@@ -34,9 +34,7 @@ export default function Chatting({ chat, setValue, handleOnClick }) {
             <p className="chat__content">{chatting.content}</p>
           </div>
         )}
-
       </div>
-
       <div className="chat__form">
         <textarea value={text} onChange={handleOnChange} onKeyPress={handleOnKeyPress} placeholder="내용을 입력하세요"></textarea>
         <button onClick={handleOnClick} className="blind">send</button>

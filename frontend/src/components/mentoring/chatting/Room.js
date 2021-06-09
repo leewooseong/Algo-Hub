@@ -23,7 +23,6 @@ export default function Room(props) {
   const myPeerConnection = useRef()
   const dataChannel = useRef()
 
-
   // video & audio variables
   const localVideo = useRef()
   const localStream = useRef()
@@ -34,17 +33,17 @@ export default function Room(props) {
 
   // configurations
   const mediaConstraints = {
-    audio: false,
+    audio: true,
     video: {
-      width: 480,
-      height: 360
+      width: { ideal: 1280 },
+      height: { ideal: 720 }
     }
   }
   const screenConstraints = {
     video: {
       cursor: "always",
-      width: 480,
-      height: 360
+      width: { ideal: 1280 },
+      height: { ideal: 720 }
     }
   }
   const peerConnectionConfig = {
@@ -223,10 +222,11 @@ export default function Room(props) {
       senders.current.find(sender => sender.track.kind === 'video').replaceTrack(screenTrack)
       screenTrack.onended = function (e) {
         localVideo.current.srcObject = localStream.current
-        senders.current.find(sender => sender.track.kind === 'video').replaceTrack(localStream.current.getTracks()[0])
+        senders.current.find(sender => sender.track.kind === 'video').replaceTrack(localStream.current.getTracks()[1])
       }
     })
   }
+
   function createPeerConnection() {
     myPeerConnection.current = new RTCPeerConnection(peerConnectionConfig)
     myPeerConnection.current.onicecandidate = handleICECandidateEvent
@@ -307,11 +307,32 @@ export default function Room(props) {
     e.target.requestFullscreen({ navigationUI: "hide" })
   }
 
+  function mediaController(device, boolValue) {
+    let flag = 0
+    if (device === 'video') flag = 1
+    localStream.current.getTracks()[flag].enabled = boolValue
+    senders.current.find(sender => sender.track.kind === device).replaceTrack(localStream.current.getTracks()[flag])
+  }
   function micControl() {
-
+    if (currentMic === true) {
+      mediaController("audio", false)
+      setCurrentMic(false)
+    }
+    else {
+      mediaController("audio", true)
+      setCurrentMic(true)
+    }
   }
   function videoControl() {
+    if (currentVideo === true) {
+      mediaController("video", false)
+      setCurrentVideo(false)
+    }
+    else {
+      mediaController("video", true)
+      setCurrentVideo(true)
 
+    }
   }
   function exitRoom() {
     let url = props.history.location.pathname.split('/')
@@ -332,15 +353,19 @@ export default function Room(props) {
       </header>
       <main className="main__section chatting__section">
         <div className="video__container">
-          <video className="video__stream" autoPlay ref={localVideo} onDoubleClick={handleDoubleClick}></video>
-          <video className="video__stream" autoPlay ref={remoteVideo} onDoubleClick={handleDoubleClick}></video>
+          <video className="video__stream" autoPlay ref={localVideo} onDoubleClick={handleDoubleClick} width="480px" height="360px"></video>
+          <video className="video__stream" autoPlay ref={remoteVideo} onDoubleClick={handleDoubleClick} width="480px" height="360px"></video>
         </div>
       </main>
       {chatLog && <Chatting value={value} chat={chatLog} setValue={setValue} handleOnClick={handleOnClick} />}
 
       <div className="chat__controller">
-        <FontAwesomeIcon icon={faMicrophone} onClick={micControl} className="chat__icons" />
-        <FontAwesomeIcon icon={faVideo} onClick={videoControl} className="chat__icons" />
+        {currentMic ?
+          <FontAwesomeIcon icon={faMicrophone} onClick={micControl} className="chat__icons" /> :
+          <FontAwesomeIcon icon={faMicrophoneSlash} onClick={micControl} className="chat__icons" />}
+        {currentVideo ?
+          <FontAwesomeIcon icon={faVideo} onClick={videoControl} className="chat__icons" /> :
+          <FontAwesomeIcon icon={faVideoSlash} onClick={videoControl} className="chat__icons" />}
         <FontAwesomeIcon icon={faPlusSquare} onClick={shareScreen} className="chat__icons" />
         <FontAwesomeIcon icon={faSignOutAlt} onClick={exitRoom} className="chat__icons" />
       </div>
