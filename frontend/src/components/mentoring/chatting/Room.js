@@ -3,6 +3,8 @@ import Chatting from './Chatting'
 import useCertificate from '../../../use/useCertificate'
 import '../../../styles/Room.css'
 import axios from 'axios'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSignOutAlt, faPlusSquare, faVideo, faVideoSlash, faMicrophone, faMicrophoneSlash } from "@fortawesome/free-solid-svg-icons";
 
 export default function Room(props) {
   // user variables
@@ -18,15 +20,17 @@ export default function Room(props) {
 
   // RTC variabels
   const socket = useRef()
-  // const [stream, setStream] = useState()
   const myPeerConnection = useRef()
   const dataChannel = useRef()
 
-  // video variables
+
+  // video & audio variables
   const localVideo = useRef()
   const localStream = useRef()
   const remoteVideo = useRef()
   const senders = useRef([])
+  const [currentMic, setCurrentMic] = useState(true)
+  const [currentVideo, setCurrentVideo] = useState(true)
 
   // configurations
   const mediaConstraints = {
@@ -303,6 +307,12 @@ export default function Room(props) {
     e.target.requestFullscreen({ navigationUI: "hide" })
   }
 
+  function micControl() {
+
+  }
+  function videoControl() {
+
+  }
   function exitRoom() {
     let url = props.history.location.pathname.split('/')
     url.pop(0)
@@ -322,16 +332,17 @@ export default function Room(props) {
       </header>
       <main className="main__section chatting__section">
         <div className="video__container">
-          <video autoPlay ref={localVideo} onDoubleClick={handleDoubleClick}></video>
-          <video autoPlay ref={remoteVideo} onDoubleClick={handleDoubleClick}></video>
+          <video className="video__stream" autoPlay ref={localVideo} onDoubleClick={handleDoubleClick}></video>
+          <video className="video__stream" autoPlay ref={remoteVideo} onDoubleClick={handleDoubleClick}></video>
         </div>
-        {chatLog && <Chatting value={value} chat={chatLog} setValue={setValue} handleOnClick={handleOnClick} />}
       </main>
+      {chatLog && <Chatting value={value} chat={chatLog} setValue={setValue} handleOnClick={handleOnClick} />}
+
       <div className="chat__controller">
-        <button>음성</button>
-        <button>비디오</button>
-        <button onClick={shareScreen}>공유</button>
-        <button onClick={exitRoom}>나가기</button>
+        <FontAwesomeIcon icon={faMicrophone} onClick={micControl} className="chat__icons" />
+        <FontAwesomeIcon icon={faVideo} onClick={videoControl} className="chat__icons" />
+        <FontAwesomeIcon icon={faPlusSquare} onClick={shareScreen} className="chat__icons" />
+        <FontAwesomeIcon icon={faSignOutAlt} onClick={exitRoom} className="chat__icons" />
       </div>
     </div>
   )

@@ -5,43 +5,88 @@ html, body {
   padding: 0;
 }
 
+.app {
+  display:grid;
+  grid-template-rows: 60px minmax(90vh, auto);
+  grid-template-columns: 3.2fr 1fr;
+  background-color: #000;
+}
+
+.app__header {
+  grid-row: 1;
+  display: flex;
+  position: fixed;
+  top: 0;
+  align-items: center;
+  width: 100%;
+  height: 40px;
+  padding: 10px 20px;
+  background: #000;
+}
+
 .app__title {
+  display: inline-block;
   font-weight: bold;
-  font-size: 1.5em;
-  background: #eee;
-  padding: 20px;
-  text-align: center;
-  color: #999;
-  margin-bottom: 1px;
-  box-shadow: 0 1px 0 var(--secondary-color);
+  font-size: 1em;
+  color: rgba(238, 238, 238, 0.589);
 }
 
 .app__title span {
-  font-size: 1.6em;
-  color: #000;
+  font-size: 1.4em;
+  color: rgba(255, 255, 255, 0.89);
 }
 
 .chatting__section {
+  grid-row: 2;
   display: flex;
+  width: 100%;
   padding: 0;
 }
 
 .video__container {
-  display: flex;
   width: 100%;
   flex-wrap: wrap;
-  padding: 20px;
+  display: flex;
+  padding: 0 20px;
+  justify-content: space-evenly;
 }
 
 .video__container video {
   margin: 10px;
 }
+.video__user {
+  position: absolute;
+  color: #fff;
+  background-color: red;
+  z-index: 10;
+  display: inline-block;
+
+}
+.video__stream {
+  border-radius: 20px;
+  width: 480px;
+  height: 360px;
+  }
 
 
 .chat__controller {
   position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   bottom: 0;
   width: 100%;
   height: 6vh;
-  background-color: rgba(51, 50, 50, 0.205);
+  background-color: #000;
+  color: #fff;
+  padding: 20px;
+}
+.chat__icons {
+  cursor: pointer;
+  margin: 0 20px;
+  font-size: 1.5em;
+}
+.chat__icons:hover {
+  font-size: 1.8em;
+  transition: all .2s;
 }

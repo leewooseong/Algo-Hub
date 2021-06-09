@@ -1,23 +1,28 @@
 .chatbox {
-  width: 440px;
-  height: 81vh;
-  padding: 20px auto;
-  background-color: #eee;
+  grid-row: 1 / span 2;
+  width: 23%;
+  height: 100vh;
+  background-color: #fff;
   display: flex;
   flex-direction: column;
+  position: fixed;
+  right: 0;
 }
 
 .chat__header {
   height: 4%;
-  font-size: 1.4em;
   padding: 15px 20px;
   font-weight: bold;
-  background-color: rgba(51, 50, 50, 0.205);
+  background-color: rgb(145, 145, 145);
+  color: #222;
+}
+.chat__header h2 {
+  font-size: 1.4em;
 }
 .chatlogs {
   padding: 10px;
   width: 95%;
-  height: 75%;
+  height: 67%;
   overflow-x: hidden;
   overflow-y: scroll;
 }
@@ -44,26 +49,25 @@
 }
 .chat__content {
   width: 90%;
-  padding: 15px;
+  padding: 10px;
   margin: 5px 10px 0;
   border-radius: 10px;
   font-size: 10px;
-  background: #fff;
-  line-height: 1.2em;
+  background: rgb(240, 240, 240);
+  line-height: 1.4em;
 }
 
 .chat__form {
-  margin-top: 20px;
   display: flex;
-  padding: 0 20px ;
+  padding: 10px ;
   align-items:center;
+  background-color: rgba(82, 79, 79, 0.589);
 }
 
 .chat__form textarea {
   background: #fbfbfb;
   width: 100%;
-  height: 100%;
-  border: 2px solid #eee;
+  height: 43px;
   border-radius: 3px;
   resize: none;
   padding: 10px;

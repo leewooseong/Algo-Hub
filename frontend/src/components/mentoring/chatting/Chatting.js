@@ -25,7 +25,7 @@ export default function Chatting({ chat, setValue, handleOnClick }) {
   return (
     <div className="chatbox">
       <div className="chat__header">
-        대화
+        <h2>대화</h2>
       </div>
       <div className="chatlogs">
         {chat && chat.map((chatting) =>
@@ -38,13 +38,9 @@ export default function Chatting({ chat, setValue, handleOnClick }) {
       </div>
 
       <div className="chat__form">
-        <textarea value={text} onChange={handleOnChange} onKeyPress={handleOnKeyPress}></textarea>
-        <button onClick={handleOnClick}>send</button>
+        <textarea value={text} onChange={handleOnChange} onKeyPress={handleOnKeyPress} placeholder="내용을 입력하세요"></textarea>
+        <button onClick={handleOnClick} className="blind">send</button>
       </div>
     </div >
   )
 }
-
-// Chatting.propTypes = {
-//   chat: PropTypes.array.isRequired,
-// }
