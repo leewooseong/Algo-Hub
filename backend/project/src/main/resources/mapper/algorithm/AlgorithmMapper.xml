@@ -38,4 +38,17 @@
         where m.m_id = mp.m_p_id and m.m_id = scm.m_id and scm.s_id = #{s_id}
         order by scm.s_cm_like desc;
     </select>
+
+    <!-- 풀이 댓글 수정 -->
+    <update id="editSourceComment" parameterType="algohub.domain.algorithm.SourceComment">
+        update source_comment set s_cm_content = #{s_cm_content} where s_cm_id = #{s_cm_id};
+    </update>
+
+    <!-- 풀이 댓글 삭제 -->
+    <delete id="deleteSourceComment" parameterType="Integer">
+        update member_profile mp, source_comment scm set mp.cm_number = mp.cm_number - 1
+        where scm.m_id = mp.m_p_id and scm.s_cm_id = #{s_cm_id};
+
+        delete from source_comment where s_cm_id = #{s_cm_id};
+    </delete>
 </mapper>

@@ -18,5 +18,9 @@ public interface AlgorithmMapper {
     // 풀이 댓글 조회
     List<SourceComment> getSourceCommentList(int s_id) throws Exception;
 
+    // 풀이 댓글 수정
+    void editSourceComment(SourceComment sourceComment) throws Exception;
 
+    // 풀이 댓글 삭제
+    void deleteSourceComment(int s_cm_id) throws Exception;
 }

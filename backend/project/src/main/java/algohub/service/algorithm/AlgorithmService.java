@@ -34,4 +34,13 @@ public class AlgorithmService {
         return mapper.getSourceCommentList(s_id);
     }
 
+    // 풀이 댓글 수정
+    public void editSourceComment(SourceComment sourceComment) throws Exception {
+        mapper.editSourceComment(sourceComment);
+    }
+
+    // 풀이 댓글 삭제
+    public void deleteSourceComment(int s_cm_id) throws Exception {
+        mapper.deleteSourceComment(s_cm_id);
+    }
 }

@@ -40,8 +40,8 @@ public class AlgorithmController {
     @PostMapping("/api/solution/comments")
     public Map<String, Object> writeSourceComment(@ModelAttribute SourceComment sourceComment) throws Exception {
         Map<String, Object> responseMap = new HashMap<>();
-        service.writeSourceComment(sourceComment);
 
+        service.writeSourceComment(sourceComment);
         responseMap.put("statusCode", Response.SC_OK);
         responseMap.put("message", "댓글 작성 완료");
 
@@ -62,8 +62,32 @@ public class AlgorithmController {
     }
 
     // 풀이 댓글 수정
+    @PutMapping("/api/solution/comments/{s_cm_id}")
+    public Map<String, Object> editSourceComment(@PathVariable int s_cm_id, @ModelAttribute SourceComment sourceComment)
+            throws Exception {
+        Map<String, Object> responseMap = new HashMap<>();
+
+        sourceComment.setS_cm_id(s_cm_id);
+        service.editSourceComment(sourceComment);
+
+        responseMap.put("statusCode", Response.SC_OK);
+        responseMap.put("message", "댓글 수정 완료");
+        return responseMap;
+    }
 
     // 풀이 댓글 삭제
+    @DeleteMapping("/api/solution/comments/{s_cm_id}")
+    public Map<String, Object> deleteSourceComment(@PathVariable int s_cm_id) throws Exception {
+        Map<String, Object> responseMap = new HashMap<>();
 
-    // 추천 수 갱신
+        service.deleteSourceComment(s_cm_id);
+        responseMap.put("statusCode", Response.SC_OK);
+        responseMap.put("message", "댓글 삭제 완료");
+
+        return responseMap;
+    }
+
+    // 풀이 추천 수 갱신
+
+    // 댓글 추천 수 갱신
 }
