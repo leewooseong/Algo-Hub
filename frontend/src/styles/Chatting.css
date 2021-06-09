@@ -3,6 +3,8 @@
   height: 81vh;
   padding: 20px auto;
   background-color: #eee;
+  display: flex;
+  flex-direction: column;
 }
 
 .chat__header {
