@@ -14,4 +14,28 @@
                 where sc.l_c_id = lc.l_c_id group by sc.a_id) T2
         where T1.a_id = T2.a_id;
     </select>
+
+    <!-- 풀이 댓글 작성 -->
+    <insert id="writeSourceComment" parameterType="algohub.domain.algorithm.SourceComment">
+        insert into source_comment(s_id, l_c_id, a_id, m_id, s_cm_content, s_cm_date, s_cm_like)
+        values(
+            #{s_id},
+            (select l_c_id from source_code where s_id = #{s_id}),
+            (select a_id from source_code where s_id = #{s_id}),
+            (select m_id from member where m_name = #{m_name}),
+            #{s_cm_content},
+            date_format(now(), '%y.%m.%d %H:%i'),
+            0);
+
+        update member_profile mp, member m set mp.cm_number = mp.cm_number + 1
+        where m.m_id = mp.m_p_id and m.m_name = #{m_name};
+    </insert>
+
+    <!-- 풀이 댓글 조회 -->
+    <select id="getSourceCommentList" parameterType="Integer" resultType="algohub.domain.algorithm.SourceComment">
+        select scm.s_cm_id, m.m_name, mp.m_p_image, scm.s_cm_content, scm.s_cm_date, scm.s_cm_like
+        from source_comment scm, member m, member_profile mp
+        where m.m_id = mp.m_p_id and m.m_id = scm.m_id and scm.s_id = #{s_id}
+        order by scm.s_cm_like desc;
+    </select>
 </mapper>
