@@ -183,7 +183,8 @@
         update member m, member_profile mp, mentor_room mr, mentor_room_review mre
         set mr.mr_score = (select * from (select AVG(mr_r_like)
                             from member m, member_profile mp, mentor_room mr, mentor_room_review mre
-                            where m.m_id = mp.m_p_id and m.m_name = #{mentorReview.m_name} and mr.mr_id = mre.mr_id) T)
+                            where m.m_id = mp.m_p_id and m.m_name = #{mentorReview.m_name} and mr.mr_id = mre.mr_id
+                                and mr.m_p_id = mp.m_p_id) T)
         where m.m_id = mp.m_p_id and m.m_name = #{mentorReview.m_name} and mp.m_p_id = mr.m_p_id;
     </insert>
 
