@@ -102,15 +102,17 @@ public class CodeReviewController {
 
     // 채팅방 나가기
     @PostMapping("/api/mentors/exitRoom/{m_name}/{uuid}")
-    Map<String, Object> exitRoom(@PathVariable("uuid") String chat_id,
-                                 @PathVariable("m_name") String m_name,
+    Map<String, Object> exitRoom(@PathVariable("m_name") String m_name,
+                                 @PathVariable("uuid") String chat_id,
                                  HttpServletRequest request){
 
         // 멘토이면
         HttpSession session = request.getSession();
         String user_name = (String) session.getAttribute("user");
 
-        if(user_name.equals(m_name)) {
+        boolean checkMentor = codeReviewService.checkMentor(user_name);
+
+        if(checkMentor) {
             codeReviewService.exitRoom(chat_id);
             codeReviewService.deleteRoom(chat_id);
         }

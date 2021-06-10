@@ -33,6 +33,10 @@ public class CodeReviewService {
         return mapper.searchRoom(m_name);
     }
 
+    public boolean checkMentor(String m_name) {
+        return mapper.checkMentor(m_name);
+    }
+
     public void exitRoom(String chat_id) {
         mapper.exitRoom(chat_id);
     }
