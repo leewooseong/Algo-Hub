@@ -251,8 +251,8 @@
 
     <!-- 멘토 평점 갱신 (수정 및 삭제 시 사용) -->
     <update id="updateMentorRate" parameterType="String">
-        SET @RATE := (SELECT AVG(mre.mr_r_like) FROM mentor_room_review mre, member m, member_profile mp
-                        WHERE m.m_id = mp.m_p_id and m.m_name = #{m_name});
+        SET @RATE := (select AVG(mre.mr_r_like) from mentor_room_review mre, member m, mentor_room mr
+                        where m.m_name = #{m_name} and m.m_id = mr.m_p_id and mr.mr_id = mre.mr_id);
 
         UPDATE mentor_room mr, member m, member_profile mp
         SET mr.mr_score = IF(@RATE IS NULL, 0, @RATE)
