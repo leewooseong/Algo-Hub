@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="algohub.repository.algorithm.AlgoListRepo">
     <select id="getAlgoList" resultType="java.util.Map">
-        select T3.p_category, T3.p_number, T1.a_id, T1.p_title, "user1" m_name, T1.p_link, group_concat(distinct T6.language separator ',') language
+        select T3.p_category, T3.p_number, T1.a_id, T1.p_title, T4.m_name, T1.p_link, group_concat(distinct T6.language separator ',') language
         from algorithm T1
         left join algorithm_category_dup T2
         on T1.a_id = T2.a_id
