@@ -24,4 +24,12 @@
             chat_activation = 'N'
         where chat_id = #{chat_id};
     </update>
+
+    <select id="checkMentor" parameterType="String" resultType="boolean">
+        select if(count(*) = 1, 1, 0)
+        from mentor_room
+        where m_p_id = (select m_id
+                        from member
+                        where m_name = #{m_name});
+    </select>
 </mapper>

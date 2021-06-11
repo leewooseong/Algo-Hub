@@ -186,6 +186,10 @@
                             where m.m_id = mp.m_p_id and m.m_name = #{mentorReview.m_name} and mr.mr_id = mre.mr_id
                                 and mr.m_p_id = mp.m_p_id) T)
         where m.m_id = mp.m_p_id and m.m_name = #{mentorReview.m_name} and mp.m_p_id = mr.m_p_id;
+
+        update member_profile mp, member m
+        set mp.post_number = mp.post_number + 1
+        where m.m_id = mp.m_p_id and m.m_name = #{user};
     </insert>
 
     <select id="getMemberSubscribe" parameterType="hashMap" resultType="algohub.domain.mentor.MemberSubscribe">
@@ -228,6 +232,10 @@
 
     <!-- 멘토 페이지 게시글 삭제 -->
     <delete id="deleteMentorPost" parameterType="Integer">
+        update member_profile mp, mentor_board mb
+        set mp.post_number = mp.post_number - 1
+        where mb.mb_id = #{mb_id} and mb.m_p_id = mp.m_p_id;
+
         DELETE FROM mentor_board mb WHERE mb.mb_id = #{mb_id};
         ALTER TABLE mentor_board AUTO_INCREMENT=1;
         SET @CNT = 0;
@@ -243,6 +251,10 @@
 
     <!-- 멘토 리뷰 삭제 -->
     <delete id="deleteMentorReview" parameterType="Integer">
+        update member_profile mp, mentor_room_review mre
+        set mp.post_number = mp.post_number - 1
+        where mre.mr_r_id = #{mr_r_id} and mre.m_p_id = mp.m_p_id;
+
         DELETE FROM mentor_room_review mre WHERE mre.mr_r_id = #{mr_r_id};
         ALTER TABLE mentor_room_review AUTO_INCREMENT=1;
         SET @CNT = 0;
@@ -251,8 +263,8 @@
 
     <!-- 멘토 평점 갱신 (수정 및 삭제 시 사용) -->
     <update id="updateMentorRate" parameterType="String">
-        SET @RATE := (SELECT AVG(mre.mr_r_like) FROM mentor_room_review mre, member m, member_profile mp
-                        WHERE m.m_id = mp.m_p_id and m.m_name = #{m_name});
+        SET @RATE := (select AVG(mre.mr_r_like) from mentor_room_review mre, member m, mentor_room mr
+                        where m.m_name = #{m_name} and m.m_id = mr.m_p_id and mr.mr_id = mre.mr_id);
 
         UPDATE mentor_room mr, member m, member_profile mp
         SET mr.mr_score = IF(@RATE IS NULL, 0, @RATE)
