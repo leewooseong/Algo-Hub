@@ -13,11 +13,17 @@
 
 .solution__writer {
   font-size: 1.2em;
+  display: flex;
+  align-items: center;
 }
 
 .solution__mname {
   font-weight: bold;
   margin: 0 5px;
+}
+
+.fa-heart {
+  cursor: pointer;
 }
 .source__container {
   position: relative;

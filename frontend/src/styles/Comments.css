@@ -20,3 +20,10 @@
 .comment__content {
   flex-grow: 1;
 }
+
+.comment__icons {
+  font-weight: normal;
+  cursor: pointer;
+  color: #777;
+  margin-left: 5px;
+}

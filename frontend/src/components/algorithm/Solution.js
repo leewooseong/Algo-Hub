@@ -1,46 +1,52 @@
 import React from "react"
 import PropTypes from "prop-types"
 import Comments from "./Comments"
-// import axios from "axios"
+import axios, { post } from "axios"
 import '../../styles/Solution.css'
 
 class Solution extends React.Component {
   state = {
     isLoading: true,
     comments: [],
+    comment_value: '',
+    currentUser: ''
   }
 
+
   getComments = async () => {
-    // await axios.get("/api/solution/comments").then((res) => {
-    //   this.setState({ comments: res["data"]["comment"], isLoading: false });
-    // });
-    const comments = [
-      {
-        s_cm_id: 1,
-        m_name: "안녕",
-        s_cm_content: "대박",
-        s_cm_date: "16362342431",
-        s_cm_like: 12,
-      },
-      {
-        s_cm_id: 2,
-        m_name: "Alg2",
-        s_cm_content: "aaaaasdgasdgnasdnkganksdgwoegbjzx zksdgabudjdgnjagb",
-        s_cm_date: "16362342431",
-        s_cm_like: 11,
-      },
-      {
-        s_cm_id: 3,
-        m_name: "AlgoMaster3",
-        s_cm_content: "와우",
-        s_cm_date: "16362342431",
-        s_cm_like: 10,
-      },
-    ]
-    this.setState({ comments })
+    await axios.get(`/api/solution/comments/1`).then((res) => {
+      console.log(res.data.comments)
+      this.setState({ comments: res.data.comments })
+    });
+  }
+
+
+  handleValueChange = (e) => {
+    let nextState = {}
+    nextState[e.target.name] = e.target.value;
+    this.setState(nextState)
+  }
+
+  getUserName = async () => {
+    await axios.get("/api/auth/me").then((res) => {
+      if (res.data.statusCode === 200)
+        this.setState({ currentUser: res.data.data.m_name })
+    })
+  }
+
+  addComments = () => {
+    if (this.state.comment_value === '') return
+    const url = '/api/solution/comments'
+    const formData = new FormData();
+    formData.append('s_id', 1)
+    formData.append('m_name', this.state.currentUser)
+    formData.append('s_cm_content', this.state.comment_value)
+    formData.append('s_cm_date', 123123)
+    return post(url, formData)
   }
 
   componentDidMount() {
+    this.getUserName()
     this.getComments()
   }
 
@@ -49,7 +55,7 @@ class Solution extends React.Component {
     return (
       <div className="solution__container">
         <div className="solution__writer">
-          <img src="https://via.placeholder.com/20x20.jpg" alt="profile__image" className="user__image" />
+          <img src="/assets/profileDefaultImage.png" alt="profile__image" className="user__image" />
           <span className="solution__mname">
             {this.props.m_name} 님의 풀이
             <i className="fas fa-heart"> {this.props.s_cm_like}</i>
@@ -72,12 +78,13 @@ class Solution extends React.Component {
                 content={comment["s_cm_content"]}
                 date={comment["s_cm_date"]}
                 like={comment["s_cm_like"]}
+                currentUser={this.state.currentUser}
               />
             )}
           </ul>
           <div className="comment__writing">
-            <input type="text" placeholder="내용을 작성하세요."></input>
-            <button>등록</button>
+            <input name="comment_value" type="text" placeholder="내용을 작성하세요." onChange={this.handleValueChange}></input>
+            <button onClick={this.addComments}>등록</button>
           </div>
         </div>
       </div>

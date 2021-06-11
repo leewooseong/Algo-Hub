@@ -1,29 +1,26 @@
 // import { useState, useEffect } from "react";
-// import Comments from "../../algorithm/Comments";
-import useAxios from "../../../use/useAxios";
+import Comments from "../../algorithm/Comments";
 
-const ReviewList = ({ m_name }) => {
-  // 댓글 api로 나중에 대체 예정
-  const mentoReviewData = useAxios({ url: `/api/mentors/${m_name}/review` });
-  console.log("review data:", mentoReviewData.data);
-
+const ReviewList = ({ m_name, contentData }) => {
   return (
     //   사용방법 1..
-    // <ul>
-    //   {reviewData.map((review) => {
-    //     // 여기가 포인트
-    //     return (
-    //       <Comments
-    //         id={review.s_cm_id}
-    //         key={review.s_cm_id}
-    //         name={review.m_name}
-    //         content={review.s_cm_content}
-    //         date={review.s_cm_date}
-    //         like={review.s_cm_like}
-    //       />
-    //     );
-    //   })}
-    // </ul>
+    <ul className="mentiview__reviewlist">
+      {contentData.data &&
+        contentData.data.data.reviewList.map((review) => {
+          // 여기가 포인트
+          return (
+            <Comments
+              page="mentiview"
+              id={review.mr_r_id}
+              key={review.mr_r_id}
+              name={review.m_name}
+              content={review.mr_r_content}
+              like={review.mr_r_like}
+              date={review.mr_r_date}
+            />
+          );
+        })}
+    </ul>
     // 사용방법 2..
     //   <ul className="mentiview__reviewlist">
     //     {reviewData.map((review) => (
@@ -39,7 +36,7 @@ const ReviewList = ({ m_name }) => {
     //       />
     //     ))}
     //   </ul>
-    <div>test</div>
+    // <div>test</div>
   );
 };
 

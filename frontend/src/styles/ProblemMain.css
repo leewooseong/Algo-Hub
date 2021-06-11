@@ -1,0 +1,19 @@
+.submit__btn {
+  height: 40px;
+  padding: 5px;
+  border: 0;
+  background-color: rgb(80, 80, 255);;
+  border-radius: 5px;
+  color: #fff;
+  right: 0;
+  margin-left: 20px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.problemList {
+  display: flex;
+  flex-wrap: wrap;
+  
+  align-content: space-between;
+}

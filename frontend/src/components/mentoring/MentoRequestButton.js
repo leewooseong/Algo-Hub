@@ -8,7 +8,6 @@ import classnames from "classnames";
 const MentoRequestButton = ({ m_name }) => {
   const ClickMentoAllow = () => {
     if (buttonInfo.text === "멘토 신청") {
-
       axios
         .put(`/api/mentor-request`)
         .then((res) => {

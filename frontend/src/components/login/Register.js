@@ -14,7 +14,7 @@ export default class RegisterBody extends Component {
   openModal = () => {
     this.setState({ modalOpen: true });
   };
-  closeModalFale = () => {
+  closeModalFail = () => {
     this.setState({ modalOpen: false });
   };
   closeModalSuccess = () => {
@@ -247,7 +247,7 @@ export default class RegisterBody extends Component {
             onChange={(e) => (this.phoneNumber = e.target.value)}
           />
         </div>
-        {/* <button>Sign Up</button> */}
+        {/* 가입완료 시 모달 창 보여주기 */}
         <React.Fragment>
           <button className="fourth">Sign Up</button>
           {this.state.response.statusCode === 200 ? (
@@ -261,7 +261,7 @@ export default class RegisterBody extends Component {
           ) : (
             <Modal
               open={this.state.modalOpen}
-              close={this.closeModalFale}
+              close={this.closeModalFail}
               header="Create a chat room"
             >
               {this.state.modalContent}

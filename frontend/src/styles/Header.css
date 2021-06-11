@@ -2,36 +2,40 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  grid-row: 1 / span 2;
+  grid-row: 1 / 3;
   width: 160px;
-  background-color: var(--primary-color);
+  background-color: var(--text-color);
   margin-right: 4px;
-  color: var(--text-color);
+  color: black;
+  z-index: 99;
   padding: 20px;
-  box-shadow: 2px 1px var(--interactive-color);
+  box-shadow: 0 0.46875rem 2.1875rem rgb(4 9 20 / 3%),
+    0 0.9375rem 1.40625rem rgb(4 9 20 / 3%),
+    0 0.25rem 0.53125rem rgb(4 9 20 / 5%), 0 0.125rem 0.1875rem rgb(4 9 20 / 3%);
 }
 
 .App__Logo {
   position: relative;
   font-family: "Orelega One", cursive;
 }
-.App__Logo i {
+.App__Logo img {
   position: absolute;
   top: 28%;
-  font-size: 1em;
-  margin: 0 4px 0 0;
+  width: 193px;
+  height: 64px;
+  margin-left: -15px;
 }
 
 .App__title {
   font-size: 2em;
-  color: #fff;
+  color: black;
   margin-left: 25px;
 }
 
 /*  nav   */
 .App__nav {
   flex-grow: 2;
-  margin-top: 40px;
+  margin-top: 80px;
 }
 
 .nav__item {
@@ -41,9 +45,10 @@
 }
 
 .nav__item:hover {
+  color: #6c757d;
   cursor: pointer;
   border-radius: 6px;
-  background-color: var(--interactive-color);
+  /* background-color: var(--interactive-color); */
 }
 
 .nav__item i {

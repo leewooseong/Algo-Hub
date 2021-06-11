@@ -1,0 +1,21 @@
+.modifybutton,
+.deletebutton {
+  margin: 0 5px;
+  background-color: white;
+  border: lightgray 2px solid;
+  border-radius: 5px;
+  color: lightgray;
+  font-size: 15px;
+  font-weight: bolder;
+}
+
+.modifybutton:hover,
+.deletebutton:hover {
+  margin: 0 5px;
+  background-color: white;
+  border: gray 2px solid;
+  border-radius: 5px;
+  color: gray;
+  font-size: 15px;
+  font-weight: bolder;
+}

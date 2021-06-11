@@ -1,6 +1,7 @@
 .App__footer {
   padding: 60px;
-  background-color: var(--box-color);
+  background-color: white;
+  /* background-color: var(--box-color); */
   margin-left: 2px;
   text-align: center;
   border-top: 1px solid var(--interactive-color);
@@ -8,7 +9,7 @@
 
 .service__name {
   display: block;
-  font-size: 2.0em;
+  font-size: 2em;
   font-weight: bold;
   margin-bottom: 15px;
 }

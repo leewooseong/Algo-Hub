@@ -9,6 +9,9 @@
   font-size: 1.4em;
   position: relative; 
   height: inherit;
+  display: flex;
+  align-items: center;
+  padding: 5px;
 }
 
 .user__image {
@@ -34,7 +37,7 @@
 .writer__label {
   font-size: 1.2em;
   font-weight: bold;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .writer__codebox {
@@ -52,8 +55,9 @@
   font-size: 0.9em;
   border: 1px solid var(--interactive-color);
   border-radius: 10px;
-  padding: 10px;
-  margin: 5px 0;
+  padding: 10px 20px;
+  margin: 10px 0;
+  line-height: 1.5em;
 }
 
 .comment__language {

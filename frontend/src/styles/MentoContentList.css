@@ -3,10 +3,16 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  /* border-top: lightgrey 2px solid; */
   margin: 10px 20px;
-  /* margin-top: 0px;
-    padding-top: 10px; */
+  box-sizing: border-box;
+}
+
+.mentiview__detailcontentlist {
+  flex-basis: 70%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px 20px;
   box-sizing: border-box;
 }
 
@@ -15,6 +21,10 @@
 }
 
 .mentocontent__item {
+  width: 100%;
+}
+
+.mentocontent__itembutton {
   margin-bottom: 4px;
   width: 100%;
   display: flex;
@@ -58,9 +68,23 @@
   text-overflow: ellipsis;
 }
 
-.mentocontent__item data,
+.mentocontent__itembutton data,
 .mentocontent__itemdetail data {
   margin-left: 10px;
   font-size: 10px;
   line-height: 20px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.mentocontent__lastline {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.mentocontent__modifydelete {
+  margin-right: 10px;
+  margin-bottom: 10px;
 }

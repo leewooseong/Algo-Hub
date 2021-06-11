@@ -1,13 +1,20 @@
 import React from "react"
-import { post } from 'axios'
+import axios, { post } from 'axios'
 
 class SolutionWriting extends React.Component {
   state = {
     a_id: this.props.location.state['a_id'],
-    // m_name: 'TestUser',
     language: '',
     content: '',
-    isForm: true
+    isForm: true,
+    currentUser: ''
+  }
+
+  getUserName = async () => {
+    await axios.get("/api/auth/me").then((res) => {
+      if (res.data.statusCode === 200)
+        this.setState({ currentUser: res.data.data.m_name })
+    })
   }
 
   handleFormSubmit = (e) => {
@@ -28,16 +35,14 @@ class SolutionWriting extends React.Component {
     const url = '/api/solution/writing'
     const formData = new FormData();
     formData.append('a_id', this.state.a_id)
-    // formData.append('m_name', this.state.m_name)
     formData.append('code', this.state.content)
     formData.append('language', this.state.language)
+    formData.append('m_name', this.state.currentUser)
+    return post(url, formData)
+  }
 
-    const config = {
-      headers: {
-        'content-type': 'text/html'
-      }
-    }
-    return post(url, formData, config)
+  componentDidMount() {
+    this.getUserName()
   }
 
   render() {
@@ -50,10 +55,10 @@ class SolutionWriting extends React.Component {
               <label htmlFor="code" className="writing__label">풀이 소스코드
                 <select className="select__language" name="language" id="language" onChange={this.handleValueChange}>
                   <option value="">Select Language</option>
-                  <option value="Python">Python</option>
                   <option value="C">C</option>
                   <option value="C++">C++</option>
                   <option value="Java">Java</option>
+                  <option value="Python">Python</option>
                 </select>
               </label>
               <label htmlFor="content" className="writing__label">내용</label>

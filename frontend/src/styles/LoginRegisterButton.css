@@ -1,7 +1,7 @@
 .login_register__button {
   display: block;
   margin: 1em auto;
-  padding: 10px 20px;
+  padding: 10px 10px;
   position: relative;
   background: none;
   border: none;
@@ -20,8 +20,12 @@
   z-index: -1;
 }
 
+.login_register__buttonhover:hover {
+  margin-left: -2px;
+  border-left: 2px solid black;
+}
+
 .login_register__button:hover {
-  border-bottom: 1px solid black;
   color: gainsboro;
 }
 

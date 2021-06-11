@@ -2,21 +2,26 @@
 .mentor__container {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .mentorinfo__container {
+  width: 400px;
+  height: 180px;
   display: flex;
-  width: 30vw;
   padding: 20px 20px 0;
   border: 1px solid var(--box-color);
-  border-radius: 20px;
+  border-radius: 10px;
+  box-shadow: rgb(0 0 0 / 50%) 0px 0px 4px 0px;
   margin: 5px;
 }
 
 .profile__image {
   padding: 10px;
-  width: 10vw;
+  width: 30%;
   box-sizing: border-box;
+  /* vertical-align: middle; */
+  padding-top: 10px;
   text-align: center;
 }
 
@@ -31,13 +36,14 @@
   background-color: #000;
   color: #fff;
   padding: 5px 10px;
-  border-radius: 20px;
+  margin-top: 5px;
+  border-radius: 10px;
 }
 
 /* mentor infomation */
 .mentor__info {
   padding: 10px;
-  width: 25vw;
+  width: 70%;
 }
 .mentor__name {
   font-size: 1.5em;
@@ -58,16 +64,25 @@
 }
 
 .subscribe__btn {
-  display: inline-block;
+  /* display: inline-block;
   width: 80%;
   border-radius: 5px;
   background-color: lightcyan;
   border: 1px solid var(--box-color);
   padding: 5px;
-  margin: 10px 0;
+  margin: 10px 0; */
+  width: 100%;
+  height: 30px;
+  margin-top: 10px;
+  background-color: #49b6ff;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 18px;
+  font-weight: bolder;
 }
 
-@media (max-width: 1300px) {
+@media (max-width: 1000px) {
   .mentor__container {
     display: flex;
     flex-direction: column;

@@ -1,23 +1,56 @@
-import React from "react";
+import React, { useCallback } from "react";
+import { Link } from "react-router-dom";
+import ModifyButton from "../../ModifyButton";
+import DeleteButton from "../../DeleteButton";
 import PropTypes from "prop-types";
+import MentorModifyWriting from "./MentorModifyWriting";
 
-function MentoContent({ title, content, date }) {
-  // 세부 페이지 인지 아닌지 detail 변수를 이용해서 판단
-  const urlArray = window.location.href.split("/");
-  let detail = false;
-  if (
-    urlArray.length === 7 &&
-    (urlArray[urlArray.length - 1] === "notice" ||
-      urlArray[urlArray.length - 1] === "curriculum" ||
-      urlArray[urlArray.length - 1] === "curation")
-  ) {
-    detail = true;
-  }
+// 등록된 글 하나하나를 나타내는 컴포넌트
+function MentoContent({
+  page,
+  id,
+  title,
+  content,
+  date,
+  detail,
+  mentorvalidation,
+}) {
+  const url = window.location.href.substring(21);
+
   return (
     <li className={detail ? "mentocontent__itemdetail" : "mentocontent__item"}>
-      <p className="mentocontent__title">{title}</p>
-      {detail ? <p className="mentocontent__content">{content}</p> : <p></p>}
-      <data className="mentocontent__date">{date}</data>
+      {detail ? (
+        <>
+          <p className="mentocontent__title">{title}</p>
+          <p className="mentocontent__content">{content}</p>
+          <div className="mentocontent__lastline">
+            <data className="mentocontent__date">{date}</data>
+            {mentorvalidation && (
+              <div className="mentocontent__modifydelete">
+                <ModifyButton
+                  id={id}
+                  title={title}
+                  content={content}
+                  page={page}
+                  path={`/mentoring/mentiview/modify/${id}/board`}
+                  buttonName=""
+                />
+                <DeleteButton id={id} page="board" m_name={""} />
+              </div>
+            )}
+          </div>
+        </>
+      ) : (
+        <>
+          <Link
+            to={`${url}/detail/${page}#${id}`}
+            className="mentocontent__itembutton"
+          >
+            <p className="mentocontent__title">{title}</p>
+            <data className="mentocontent__date">{date}</data>
+          </Link>
+        </>
+      )}
     </li>
   );
 }

@@ -4,17 +4,20 @@
   flex-grow: 2;
 }
 
-.languages__languege {
+.languages__language {
   display: inline-block;
-  border: 1px solid var(--primary-color);
   border-radius: 10px;
-  padding: 10px;
-  font-size: 0.8em;
+  padding: 0.5em;
+  font-size: 1em;
 }
 
-.languages__languege:hover {
+.languages__language:hover {
   cursor: pointer;
   font-weight: bold;
   color: var(--interactive-color);
-  box-shadow: 0 0 1px 1px var(--interactive-color);
+  background-color: ver(--primary-color);
+}
+
+.main__section .languages {
+  justify-content: flex-start;
 }

@@ -3,8 +3,8 @@
   margin-top: 20px;
   margin-bottom: 20px;
   max-height: 200px;
-  width: 300px;
-  height: 40%;
+  width: 350px;
+  height: 350px;
   display: flex;
   flex-flow: column;
   justify-content: center;
@@ -51,7 +51,7 @@
 }
 
 .mentiview__mentointro {
-  flex-basis: 20%;
+  flex-basis: 50px;
   padding: 10px 20px;
   text-align: left;
   vertical-align: middle;
@@ -59,7 +59,8 @@
 }
 
 .mentiview__followbutton {
-  flex-basis: 20%;
+  flex-basis: 40px;
+
   margin: 0 20px;
   background-color: #49b6ff;
   border: none;
@@ -70,7 +71,7 @@
 }
 
 .mentiview__followingbutton {
-  flex-basis: 20%;
+  flex-basis: 40px;
   margin: 0 20px;
   background-color: lightgrey;
   border: none;
@@ -78,4 +79,19 @@
   color: white;
   font-size: 18px;
   font-weight: bolder;
+}
+
+.mentiview__mentobutton {
+  flex-basis: 40px;
+  margin: 0 20px;
+  background-color: white;
+  border: gold 2px solid;
+  border-radius: 6px;
+  color: gold;
+  font-size: 18px;
+  font-weight: bolder;
+}
+
+.mentiview__disabled {
+  display: none;
 }

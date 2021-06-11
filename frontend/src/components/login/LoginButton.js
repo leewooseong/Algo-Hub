@@ -5,7 +5,9 @@ import "../../styles/LoginRegisterButton.css";
 export default function LoginButton() {
   return (
     <Link className="login_register__button_link" to="/auth/login">
-      <button className="login_register__button">Login</button>
+      <div className="login_register__buttonhover">
+        <button className="login_register__button">로그인</button>
+      </div>
     </Link>
   );
 }

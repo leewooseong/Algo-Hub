@@ -1,6 +1,6 @@
 .button__liveon,
 .button__liveoff {
-  margin-left: -20px;
+  margin-left: 35px;
   margin-top: 10px;
   height: 20px;
   width: 70px;
@@ -37,7 +37,7 @@
 }
 
 .live__link {
-  display:inline-block;
-  width:1px;
-  height:1px;
+  display: inline-block;
+  width: 1px;
+  height: 1px;
 }

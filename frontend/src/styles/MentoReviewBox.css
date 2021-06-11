@@ -1,10 +1,24 @@
 .mentiview__mentoreviewbox {
   margin-bottom: 20px;
-  max-width: 300px;
-  height: 55%;
+  max-width: 350px;
+  height: 70%;
   width: 100%;
   display: flex;
   flex-flow: column;
+  justify-content: flex-start;
+
+  border-radius: 14px;
+  box-shadow: rgb(0 0 0 / 50%) 0px 0px 4px 0px;
+}
+
+/* 상세 리뷰창 */
+.mentiview__mentoreview {
+  height: 100%;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-flow: nowrap column;
   justify-content: center;
   border-radius: 14px;
   box-shadow: rgb(0 0 0 / 50%) 0px 0px 4px 0px;
@@ -19,7 +33,10 @@
   box-sizing: border-box;
   padding-left: 20px;
   padding-right: 20px;
+  padding-bottom: 10px;
+  margin-top: 20px;
   margin-bottom: 10px;
+
   text-align: center;
   color: white;
 }
@@ -54,6 +71,7 @@
 
 .mentiviewcomment__list {
   display: flex;
+  flex-basis: 100%;
   justify-content: flex-start;
   margin-bottom: 4px;
   overflow: hidden;
@@ -69,6 +87,7 @@
 }
 
 .mentiviewcomment__writer {
+  flex-grow: 1;
   text-align: left;
   margin: 0 5px;
 }
@@ -77,7 +96,7 @@
   flex-basis: 20%;
   /* white-space: nowrap; */
   text-overflow: ellipsis;
-  flex-grow: 1;
+  flex-grow: 10;
 }
 
 .mentiviewcomment__date {
@@ -85,5 +104,7 @@
 }
 
 .mentiviewcomment__like {
-  font-size: 10px;
+  flex-grow: 1;
+  margin-right: 5px;
+  font-size: 15px;
 }
