@@ -2,7 +2,8 @@
 .mentor__container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  margin: 0 auto;
+  width: 1000px;
 }
 
 .mentorinfo__container {
@@ -28,6 +29,7 @@
 .mentor__image {
   width: 100%;
   margin-bottom: 5px;
+  border-radius: 80%;
 }
 
 .mentor__score {
@@ -49,12 +51,20 @@
   font-size: 1.5em;
   font-weight: bold;
   margin-bottom: 2px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .menti__number {
   color: blue;
 }
 .mentor__intro {
-  padding: 20px 0;
+  width: 100%;
+  height: 30%;
+  padding-top: 20px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .activity__list {
   display: inline-block;
@@ -63,23 +73,30 @@
   margin-right: 10px;
 }
 
-.subscribe__btn {
-  /* display: inline-block;
-  width: 80%;
-  border-radius: 5px;
-  background-color: lightcyan;
-  border: 1px solid var(--box-color);
-  padding: 5px;
-  margin: 10px 0; */
-  width: 100%;
-  height: 30px;
-  margin-top: 10px;
-  background-color: #49b6ff;
+.mentor__namefollow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.mentormenti__followingbutton {
+  width: 30%;
+  height: 25px;
+  margin-top: 3px;
+  margin-right: 5px;
+  background-color: lightgray;
   border: none;
   border-radius: 6px;
   color: white;
-  font-size: 18px;
+  font-size: 12px;
   font-weight: bolder;
+}
+
+.mentor__activity {
+  font-weight: bold;
+}
+
+.disabled {
+  display: none;
 }
 
 @media (max-width: 1000px) {

@@ -32,7 +32,13 @@ class ProblemWriting extends React.Component {
     this.setState({ isForm: false })
     e.preventDefault()
     this.addPost().then((response) => {
-      console.log(response.data)
+      if (response.data.statusCode === 200) {
+        alert('등록되었습니다.')
+        this.props.history.goBack()
+      }
+      else {
+        alert('실패')
+      }
     })
   }
 
@@ -99,8 +105,7 @@ class ProblemWriting extends React.Component {
 
               <button className="writing__btn" type="submit" value="등록">
                 등록
-                  </button>
-              {isForm ? "" : alert('등록되었습니다')}
+              </button>
             </form>
           </div>
         </section>

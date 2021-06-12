@@ -49,6 +49,7 @@
 
 .writer__comment {
   margin-top: 10px;
+  max-width: 900px;
 }
 
 .writer__content {
@@ -62,4 +63,8 @@
 
 .comment__language {
   margin-bottom: 5px;
+}
+
+.solution__btn {
+  margin-left: 0;
 }

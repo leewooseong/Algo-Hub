@@ -27,3 +27,23 @@
   color: #777;
   margin-left: 5px;
 }
+
+.comment__writing{
+  display: flex;
+  margin-top: 5px;
+}
+.comment__value {
+  width: 94%;
+  height: 30px;
+  border: 1px solid #ddd;
+  border-radius: 5px 0 0 5px;
+}
+
+.comment__btn {
+  border: 1px solid #ddd;
+  width: 50px;
+  height: 34px;
+  background-color: var(--box-color);
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+}

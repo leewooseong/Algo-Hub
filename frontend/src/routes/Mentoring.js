@@ -12,53 +12,54 @@ import MentoCuration from "../components/mentoring/mentiview/MentoCuration";
 import ReviewWriting from "../components/mentoring/mentiview/ReviewWriting";
 import MentorModifyWriting from "../components/mentoring/mentiview/MentorModifyWriting";
 import ReviewModifyWriting from "../components/mentoring/mentiview/ReviewModifyWriting";
+import useCertificate from "../use/useCertificate";
+import $ from "jquery";
+import {} from "jquery.cookie";
 
-class Mentoring extends React.Component {
-  render() {
-    return (
-      <div className="App">
-        <Header />
-        <Switch>
-          <Route exact path="/mentoring" component={MentoMenti} />
+export default function Mentoring() {
+  const user = useCertificate(true);
+  console.log($.cookie("JSESSIONID"));
+  return (
+    <div className="App">
+      <Header user={user} />
+      <Switch>
+        <Route exact path="/mentoring" component={MentoMenti} />
 
-          <Route
-            path="/mentoring/mentiview/:name/detail/review"
-            component={MentoReview}
-          />
-          <Route
-            path="/mentoring/mentiview/:name/detail/notice"
-            component={MentoNotice}
-          />
-          <Route
-            path="/mentoring/mentiview/:name/detail/curriculum"
-            component={MentoCurriculum}
-          />
-          <Route
-            path="/mentoring/mentiview/:name/detail/curation"
-            component={MentoCuration}
-          />
-          <Route
-            path="/mentoring/mentiview/modify/:id/board"
-            component={MentorModifyWriting}
-          />
-          <Route
-            path="/mentoring/mentiview/modify/:id/review"
-            component={ReviewModifyWriting}
-          />
-          <Route
-            path="/mentoring/mentiview/writing/mentor/board"
-            component={MentorWriting}
-          />
-          <Route
-            path="/mentoring/mentiview/writing/:name/review"
-            component={ReviewWriting}
-          />
-          <Route path="/mentoring/mentiview/:name" component={MentiView} />
-        </Switch>
-        <Footer />
-      </div>
-    );
-  }
+        <Route
+          path="/mentoring/mentiview/:name/detail/review"
+          component={MentoReview}
+        />
+        <Route
+          path="/mentoring/mentiview/:name/detail/notice"
+          component={MentoNotice}
+        />
+        <Route
+          path="/mentoring/mentiview/:name/detail/curriculum"
+          component={MentoCurriculum}
+        />
+        <Route
+          path="/mentoring/mentiview/:name/detail/curation"
+          component={MentoCuration}
+        />
+        <Route
+          path="/mentoring/mentiview/modify/:id/board"
+          component={MentorModifyWriting}
+        />
+        <Route
+          path="/mentoring/mentiview/modify/:id/review"
+          component={ReviewModifyWriting}
+        />
+        <Route
+          path="/mentoring/mentiview/writing/mentor/board"
+          component={MentorWriting}
+        />
+        <Route
+          path="/mentoring/mentiview/writing/:name/review"
+          component={ReviewWriting}
+        />
+        <Route path="/mentoring/mentiview/:name" component={MentiView} />
+      </Switch>
+      <Footer />
+    </div>
+  );
 }
-
-export default Mentoring;

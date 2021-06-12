@@ -1,4 +1,3 @@
-
 const UserInfo = ({
   m_name,
   m_p_image,

@@ -1,30 +1,16 @@
 import React from "react"
 import PropTypes from "prop-types"
-import Comments from "./Comments"
+import SolutionComment from "./SolutionComment"
 import axios, { post } from "axios"
 import '../../styles/Solution.css'
 
 class Solution extends React.Component {
   state = {
+    sid: this.props.id,
     isLoading: true,
     comments: [],
     comment_value: '',
     currentUser: ''
-  }
-
-
-  getComments = async () => {
-    await axios.get(`/api/solution/comments/1`).then((res) => {
-      console.log(res.data.comments)
-      this.setState({ comments: res.data.comments })
-    });
-  }
-
-
-  handleValueChange = (e) => {
-    let nextState = {}
-    nextState[e.target.name] = e.target.value;
-    this.setState(nextState)
   }
 
   getUserName = async () => {
@@ -34,20 +20,8 @@ class Solution extends React.Component {
     })
   }
 
-  addComments = () => {
-    if (this.state.comment_value === '') return
-    const url = '/api/solution/comments'
-    const formData = new FormData();
-    formData.append('s_id', 1)
-    formData.append('m_name', this.state.currentUser)
-    formData.append('s_cm_content', this.state.comment_value)
-    formData.append('s_cm_date', 123123)
-    return post(url, formData)
-  }
-
   componentDidMount() {
     this.getUserName()
-    this.getComments()
   }
 
   render() {
@@ -68,25 +42,11 @@ class Solution extends React.Component {
             </code>
           </pre>
         </div>
-        <div className="solution__comments">
-          <ul className="solution__comment">
-            {comments.map(comment =>
-              <Comments
-                id={comment['s_cm_id']}
-                key={comment['s_cm_id']}
-                name={comment["m_name"]}
-                content={comment["s_cm_content"]}
-                date={comment["s_cm_date"]}
-                like={comment["s_cm_like"]}
-                currentUser={this.state.currentUser}
-              />
-            )}
-          </ul>
-          <div className="comment__writing">
-            <input name="comment_value" type="text" placeholder="내용을 작성하세요." onChange={this.handleValueChange}></input>
-            <button onClick={this.addComments}>등록</button>
-          </div>
-        </div>
+        <SolutionComment
+          sid={this.state.sid}
+          key={this.state.sid}
+          currentUser={this.state.currentUser}
+        />
       </div>
     )
   }

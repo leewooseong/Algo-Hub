@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import "../styles/ModifyDeleteButton.css";
 
 const ModifyButton = ({ path, id, title, content, page, like, buttonName }) => {
-  const ClickModifyButton = () => { };
+  const ClickModifyButton = () => {};
   return (
     <Link
       to={{

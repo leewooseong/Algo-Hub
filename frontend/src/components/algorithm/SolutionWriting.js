@@ -21,7 +21,8 @@ class SolutionWriting extends React.Component {
     this.setState({ isForm: false })
     e.preventDefault()
     this.addPost().then((response) => {
-      console.log(response.data)
+      alert('작성되었습니다.')
+      this.props.history.goBack()
     })
   }
 

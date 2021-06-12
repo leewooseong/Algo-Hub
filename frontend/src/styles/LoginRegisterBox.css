@@ -4,7 +4,86 @@
   flex-flow: nowrap;
   justify-content: space-between;
   text-align: center;
-  width: 100%;
-  margin-left: 0px;
-  margin-bottom: 400px;
+  width: 150px;
+  position: fixed;
+  bottom: 100px;
+}
+
+.logindone__login_box {
+  display: flex;
+  flex-flow: nowrap;
+  justify-content: first baseline;
+  position: fixed;
+  bottom: 100px;
+  border: none;
+  background-color: white;
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+  width: 160px;
+  line-height: 40px;
+  font-size: 18px;
+}
+
+.logindone__image {
+  height: 40px;
+  width: 40px;
+  border-radius: 100%;
+}
+
+.logindone__name {
+  flex-grow: 1;
+  text-align: center;
+  margin-right: 5px;
+  font-weight: bold;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.logindone__meatballbutton {
+  height: 40px;
+  width: 30px;
+  background-color: white;
+  border: none;
+}
+.logindone__meatballbutton:hover {
+  color: gainsboro;
+}
+
+.logindone__dropdownmenu_right {
+  position: fixed;
+  left: 190px;
+  bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  /* border: 1px solid black; */
+  border-radius: 5px;
+  background-color: white;
+  z-index: 100;
+  box-shadow: 0.25rem 0.5rem rgb(20 20 84 / 4%),
+    0 0.5rem 1.125rem rgb(20 20 84 / 8%),
+    0 1rem 2rem -0.125rem rgb(20 20 84 / 8%),
+    0 0 0 0.0625rem rgb(20 20 84 / 12%);
+}
+
+.logindone__dropdownmenu_list {
+  font-size: 14px;
+  padding: 10px;
+  color: black;
+  font-weight: 900;
+  border-radius: 5px;
+}
+
+.logindone__dropdownmenu_list:hover {
+  font-weight: 900;
+  color: lightgray;
+}
+
+.logindone__logoutbutton {
+  background-color: white;
+  border: none;
+}
+
+.disabled {
+  display: none;
 }

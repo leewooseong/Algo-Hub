@@ -8,7 +8,6 @@ import '../../styles/SolutionMain.css'
 class SolutionMain extends React.Component {
   state = {
     id: this.props.location.state.aid,
-    pid: [],
     p_title: this.props.location.state.ptitle,
     p_link: '',
     mname: this.props.location.state.mname,
@@ -23,9 +22,7 @@ class SolutionMain extends React.Component {
   getData = async () => {
     const { ptitle, language } = this.props.history.location.state
     await axios.get(`/api/solution/${ptitle}/language/${language}`).then((res) => {
-      console.log(Object.keys(res.data.source))
       this.setState({
-        pid: res.data.source,
         p_link: res.data.p_link,
         writer: res.data.writer,
         source: res.data.source,
@@ -59,7 +56,7 @@ class SolutionMain extends React.Component {
                 className="problem__link"
                 rel="noreferrer">
                 <i className="fas fa-external-link-alt"></i> 문제 이동
-          </a>
+              </a>
             </h2>
             <div className="user__info">
               <img
@@ -76,7 +73,7 @@ class SolutionMain extends React.Component {
               <p className="writer__content">{writer[0]["p_content"]}</p>
             </div>
             <h3 className="comment__language writer__label">사용 언어</h3>
-            <Language data={this.state.sendData} />
+            <Language data={this.state.sendData} currentLanguage={this.state.language} />
             <Link
               to={{
                 pathname: "/category/algorithm/solution/writing",
@@ -87,13 +84,13 @@ class SolutionMain extends React.Component {
                 }
               }}
             >
-              <button className="submit__btn">풀이 등록</button>
+              <button className="submit__btn solution__btn">풀이 등록</button>
             </Link>
             {
               this.state.source && this.state.source.map((data, index) => (
                 <Solution
-                  id={index}
-                  key={index}
+                  id={data['s_id']}
+                  key={data['s_id']}
                   m_name={data["m_name"]}
                   s_cm_like={data["s_like"]}
                   code={data["code"]}

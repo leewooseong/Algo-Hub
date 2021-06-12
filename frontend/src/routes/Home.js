@@ -1,16 +1,13 @@
 import React from "react";
 import Header from "../components/layout/Header";
-import LoginRegisterBox from "../components/login/LoginRegisterBox";
+import useCertificate from "../use/useCertificate";
 import "../styles/Home.css";
 
-class Home extends React.Component {
-  render() {
-    return (
-      <div className="App">
-        <Header />
-      </div>
-    );
-  }
+export default function Home() {
+  const user = useCertificate(true);
+  return (
+    <div className="App">
+      <Header user={user} />
+    </div>
+  );
 }
-
-export default Home;

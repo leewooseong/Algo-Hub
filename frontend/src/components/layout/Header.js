@@ -1,9 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import LoginRegisterBox from "../login/LoginRegisterBox";
+import useAxios from "../../use/useAxios";
+import axios from "axios";
 import "../../styles/Header.css";
 
-function Header() {
+function Header({ user }) {
+  // 멘토인지 여부를 확인하여 MentoRequest 버튼에 표시하기 위함
+  const [mentorValidation, setMentorValidation] = useState(false);
+
+  useEffect(() => {
+    if (user.loading) {
+      const fetchData = async () => {
+        const result = await axios.get("/api/mentors");
+        const mentorList = result.data.mentorList;
+        if (result.data.mentorList) {
+          let num = result.data.mentorList.length;
+          for (let i = 0; i < num; i++) {
+            if (mentorList[i]["m_name"] == user.localUserName) {
+              setMentorValidation(true);
+              break;
+            }
+          }
+        }
+      };
+      fetchData();
+    }
+  }, [user.loading]);
+
   return (
     <header className="App__header">
       <div className="App__Logo">
@@ -37,7 +61,7 @@ function Header() {
           </Link>
         </ul>
       </nav>
-      <LoginRegisterBox />
+      <LoginRegisterBox user={user} mentorValidation={mentorValidation} />
     </header>
   );
 }

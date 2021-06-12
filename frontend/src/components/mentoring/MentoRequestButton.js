@@ -1,11 +1,14 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import useChangeButton from "../../use/useChangeButton";
 import useShowButton from "../../use/useShowButton";
 import "../../styles/MentoRequestButton.css";
 import classnames from "classnames";
 
-const MentoRequestButton = ({ m_name }) => {
+const MentoRequestButton = ({ m_name, mentorValidation }) => {
+  const [initialState, setInitialState] = useState("");
+  const [initialClassName, setInitialClassName] = useState("__notallow");
+
   const ClickMentoAllow = () => {
     if (buttonInfo.text === "멘토 신청") {
       axios
@@ -23,19 +26,34 @@ const MentoRequestButton = ({ m_name }) => {
         });
 
       buttonInfo.setText("멘토");
-      alert("멘토 등록 성공");
+    } else if (buttonInfo.text === "멘토") {
+      window.location.href = `/mentoring/mentiview/${m_name}`;
     }
   };
 
-  const buttonInfo = useChangeButton("멘토 신청", "__notallow");
-  const buttonShow = useShowButton();
-  console.log(buttonShow);
+  // 초기 상태
+  useEffect(() => {
+    if (mentorValidation) {
+      setInitialState("멘토");
+      setInitialClassName("__allow");
+    } else {
+      setInitialState("멘토 신청");
+      setInitialClassName("__notallow");
+    }
+  }, [mentorValidation]);
+
+  const buttonInfo = useChangeButton(initialState, initialClassName);
+
+  useEffect(() => {
+    console.log("initialState is changed", initialState, buttonInfo.text);
+    buttonInfo.setText(initialState);
+  }, [initialState]);
 
   return (
     <button
       className={classnames(
-        "mentorequestbutton" + buttonInfo.className,
-        buttonShow.showClass
+        "logindone__dropdownmenu_list",
+        "logindone__logoutbutton"
       )}
       onClick={() => {
         ClickMentoAllow();
