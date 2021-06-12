@@ -85,7 +85,7 @@ export default function UserInfo({
                 {buttonInfo.text}
               </button>
             </div>
-            <span className="menti__number">팔로워 {m_c_number}명</span>
+            <span className="menti__number">구독자 {m_c_number}명</span>
             <p className="mentor__intro">{m_p_intro}</p>
             <ul className="mentor__activity">
               <li className="activity__list">게시물: {post_number}개</li>
