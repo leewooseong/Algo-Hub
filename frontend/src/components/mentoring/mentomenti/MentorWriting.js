@@ -1,7 +1,11 @@
 import React, { useState, useCallback } from "react";
 import axios from "axios";
 
-export default function MentorWriting() {
+export default function MentorWriting(props) {
+  // url로 접근 시 돌려보내기
+  if (props.location.state === undefined) {
+    window.location.replace("/");
+  }
   const useInput = (initValue = null) => {
     const [value, setter] = useState(initValue);
     const handler = useCallback((e) => {
@@ -24,6 +28,7 @@ export default function MentorWriting() {
       .post("/api/mentors/writing", formData)
       .then((res) => {
         alert("성공");
+        props.history.goBack();
       })
       .catch((err) => {
         alert("실패");
