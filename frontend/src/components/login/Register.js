@@ -19,8 +19,9 @@ export default class RegisterBody extends Component {
   };
   closeModalSuccess = () => {
     this.setState({ modalOpen: false });
-    const { history } = this.props;
-    history.push("/");
+    // const { history } = this.props;
+    // history.push("/");
+    window.location.replace("/");
   };
 
   // 회원 추가
