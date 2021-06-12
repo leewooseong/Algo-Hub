@@ -1,6 +1,3 @@
+const MentorBoard = () => {};
 
-const MentorBoard = () => {
-
-}
-
-export default MentorBoard
+export default MentorBoard;

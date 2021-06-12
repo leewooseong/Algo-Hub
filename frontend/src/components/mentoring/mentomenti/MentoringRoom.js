@@ -1,94 +1,98 @@
-import { useEffect } from 'react'
+import { useEffect } from "react";
 
 export default function MentoringRoom() {
   const socket = new WebSocket("ws://localhost:8080/signal");
-  const localUserName = localStorage.getItem("uuid")
+  const localUserName = localStorage.getItem("uuid");
   const mediaConstraints = {
     audio: true,
-    video: true
-  }
-  const localRoom = 1
-  const localVideo = ''
+    video: true,
+  };
+  const localRoom = 1;
+  const localVideo = "";
   let localStream;
   let localVideoTracks;
 
-
   const peerConnectionConfig = {
-    'iceServers': [
+    iceServers: [
       // { 'urls': 'stun:stun.stunprotocol.org:3478' },
-      { 'urls': 'stun:stun.l.google.com:19302' },
-    ]
+      { urls: "stun:stun.l.google.com:19302" },
+    ],
   };
   let myPeerConnection;
 
   useEffect(() => {
-    start()
-  }, [])
+    start();
+  }, []);
 
   // #1. socket init
   const start = () => {
     socket.onopen = () => {
-      console.log('WebSocket connection opened to Room: #' + localRoom);
+      console.log("WebSocket connection opened to Room: #" + localRoom);
       // send a message to the server to join selected room with Web Socket
       sendToServer({
         from: localUserName,
-        type: 'join',
-        data: localRoom
-      })
-      console.log('sendtoserver')
-    }
+        type: "join",
+        data: localRoom,
+      });
+      console.log("sendtoserver");
+    };
 
     socket.onmessage = function (msg) {
-      let message = JSON.parse(msg.data)
+      let message = JSON.parse(msg.data);
       switch (message.type) {
         case "text":
-          console.log('Text message from ' + message.from + ' received: ' + message.data)
-          break
+          console.log(
+            "Text message from " + message.from + " received: " + message.data
+          );
+          break;
         case "offer":
-          console.log('Signal OFFER received')
-          handleOfferMessage(message)
+          console.log("Signal OFFER received");
+          handleOfferMessage(message);
           break;
         case "answer":
-          console.log('Signal ANSWER received')
-          handleAnswerMessage(message)
+          console.log("Signal ANSWER received");
+          handleAnswerMessage(message);
           break;
         // when a remote peer sends an ice candidate to us
         case "ice":
-          console.log('Signal ICE Candidate received');
+          console.log("Signal ICE Candidate received");
           handleNewICECandidateMessage(message.sdp);
           break;
         case "join":
-          console.log('Client is starting to ' + (message.data === "true)" ? 'negotiate' : 'wait for a peer'));
+          console.log(
+            "Client is starting to " +
+              (message.data === "true)" ? "negotiate" : "wait for a peer")
+          );
           handlePeerConnection(message);
           break;
         default:
-          handleErrorMessage('Wrong type message received from server')
+          handleErrorMessage("Wrong type message received from server");
       }
-    }
+    };
 
     socket.onclose = function (message) {
-      console.log('Socket has been closed')
-    }
+      console.log("Socket has been closed");
+    };
 
     socket.onerror = function (message) {
-      handleErrorMessage("Error: " + message)
-    }
-  }
+      handleErrorMessage("Error: " + message);
+    };
+  };
 
-  function initialize() {
-
-  }
+  function initialize() {}
 
   function handleOfferMessage(message) {
-    console.log('Accepting Offer Message');
+    console.log("Accepting Offer Message");
     let desc = new RTCSessionDescription(message.sdp);
 
     if (desc != null && message.sdp != null) {
-      console.log('RTC Signalling state: ' + myPeerConnection.signalingState);
-      myPeerConnection.setRemoteDescription(desc).then(function () {
-        console.log("Set up local media stream");
-        return navigator.mediaDevices.getUserMedia(mediaConstraints);
-      })
+      console.log("RTC Signalling state: " + myPeerConnection.signalingState);
+      myPeerConnection
+        .setRemoteDescription(desc)
+        .then(function () {
+          console.log("Set up local media stream");
+          return navigator.mediaDevices.getUserMedia(mediaConstraints);
+        })
         .then(function (stream) {
           console.log("-- Local video stream obtained");
           localStream = stream;
@@ -99,7 +103,9 @@ export default function MentoringRoom() {
           }
 
           console.log("-- Adding stream to the RTCPeerConnection");
-          localStream.getTracks().forEach(track => myPeerConnection.addTrack(track, localStream));
+          localStream
+            .getTracks()
+            .forEach((track) => myPeerConnection.addTrack(track, localStream));
         })
         .then(function () {
           console.log("-- Creating answer");
@@ -120,96 +126,91 @@ export default function MentoringRoom() {
           console.log("Sending answer packet back to other peer");
           sendToServer({
             from: localUserName,
-            type: 'answer',
-            sdp: myPeerConnection.localDescription
+            type: "answer",
+            sdp: myPeerConnection.localDescription,
           });
-
         })
         // .catch(handleGetUserMediaError);
-        .catch(handleErrorMessage)
+        .catch(handleErrorMessage);
     }
   }
 
-  function handleAnswerMessage() {
-
-  }
+  function handleAnswerMessage() {}
 
   function handleNewICECandidateMessage(event) {
     if (event.candidate) {
       sendToServer({
         from: localUserName,
-        type: 'ice',
-        candidate: event.candidate
-      })
-      console.log('ICE Candidate Event: ICE candidate sent')
+        type: "ice",
+        candidate: event.candidate,
+      });
+      console.log("ICE Candidate Event: ICE candidate sent");
     }
   }
 
-  // #2. RTCPeerConnection 
+  // #2. RTCPeerConnection
   function handlePeerConnection(message) {
-    console.log('handlePeerConnection')
+    console.log("handlePeerConnection");
     createPeerConnection();
     // getMedia(mediaConstraints);
     if (message.data === "true") {
-      myPeerConnection.onnegotiationneeded = handleNegotiationNeededEvent
+      myPeerConnection.onnegotiationneeded = handleNegotiationNeededEvent;
     }
   }
 
-  // #2-1. RTCPeerConnection 
+  // #2-1. RTCPeerConnection
   function createPeerConnection() {
-    myPeerConnection = new RTCPeerConnection(peerConnectionConfig)
-    myPeerConnection.onicecandidate = handleICECandidateEvent
+    myPeerConnection = new RTCPeerConnection(peerConnectionConfig);
+    myPeerConnection.onicecandidate = handleICECandidateEvent;
     myPeerConnection.ontrack = handleTrackEvent;
   }
 
-  // #2-2. handleICECandidateEvent 
+  // #2-2. handleICECandidateEvent
   function handleICECandidateEvent(event) {
-    console.log('handleICECandidateEvent')
+    console.log("handleICECandidateEvent");
     if (event.candidate) {
       sendToServer({
         from: localUserName,
-        type: 'ice',
-        candidate: event.candidate
+        type: "ice",
+        candidate: event.candidate,
       });
-      console.log('ICE Candidate Event: ICE candidate sent');
+      console.log("ICE Candidate Event: ICE candidate sent");
     }
   }
 
-  // #2-3. handleTrackEvent 
-  function handleTrackEvent() {
+  // #2-3. handleTrackEvent
+  function handleTrackEvent() {}
 
-  }
-
-  // #3. createOffer 
+  // #3. createOffer
   function handleNegotiationNeededEvent() {
-    console.log('createOffer')
-    myPeerConnection.createOffer().then(function (offer) {
-      return myPeerConnection.setLocalDescription(offer)
-    })
+    console.log("createOffer");
+    myPeerConnection
+      .createOffer()
+      .then(function (offer) {
+        return myPeerConnection.setLocalDescription(offer);
+      })
       .then(function () {
         sendToServer({
           from: localUserName,
-          type: 'offer',
-          sdp: myPeerConnection.localDescription
-        })
-        console.log('Negotiation Needed Event: SDP offer sent')
+          type: "offer",
+          sdp: myPeerConnection.localDescription,
+        });
+        console.log("Negotiation Needed Event: SDP offer sent");
       })
       .catch(function (reason) {
         // an error occurred, so handle the failure to connect
-        handleErrorMessage('failure to connect error: ', reason)
-      })
+        handleErrorMessage("failure to connect error: ", reason);
+      });
   }
 
   function handleErrorMessage(message) {
-    console.error(message)
+    console.error(message);
   }
 
   function sendToServer(msg) {
-    let msgJSON = JSON.stringify(msg)
-    socket.send(msgJSON)
+    let msgJSON = JSON.stringify(msg);
+    socket.send(msgJSON);
   }
 
-  return (
-    <div>hi</div>
-  )
+  return <div>hi</div>;
 }
