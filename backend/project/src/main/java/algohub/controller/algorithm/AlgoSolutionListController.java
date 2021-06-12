@@ -43,6 +43,7 @@ public class AlgoSolutionListController {
         }
 
         String _language = solutionList.get(0).get("language").toString();
+
         map.put("language", _language);
 
         for (Map<String, Object> i : solutionList) {

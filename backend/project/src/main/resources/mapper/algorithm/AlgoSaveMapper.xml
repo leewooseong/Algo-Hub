@@ -27,6 +27,13 @@
               from source_code SC
               right join language_category LC
               on SC.l_c_id = LC.l_c_id
-              where language = #{algosave.language}) T1, algorithm T2
+              where language = #{algosave.language}) T1, algorithm T2;
+
+        update member_profile
+        set post_number = post_number + 1
+        where m_p_id = (select m_id
+                        from member
+                        where m_name = #{current_user});
     </insert>
+
 </mapper>
