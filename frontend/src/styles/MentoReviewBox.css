@@ -94,7 +94,8 @@
 
 .mentiviewcomment__content {
   flex-basis: 20%;
-  /* white-space: nowrap; */
+  overflow: hidden;
+  white-space: nowrap;
   text-overflow: ellipsis;
   flex-grow: 10;
 }

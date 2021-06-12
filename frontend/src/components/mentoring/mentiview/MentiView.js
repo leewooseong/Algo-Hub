@@ -57,7 +57,7 @@ const MentiView = () => {
       <div className="mentoring__menitview">
         {mentoInfoData.data && (
           <div className="mentoring__mentiviewleft">
-            {userid && (
+            {user.loading ? (
               <MentoInfoBox
                 m_name={mentoInfoData.data.data.mentor.m_name}
                 m_p_image="/assets/profileDefaultImage.png"
@@ -69,6 +69,8 @@ const MentiView = () => {
                 userCertificate={user}
                 reviewData={mentoReviewData}
               />
+            ) : (
+              <div></div>
             )}
             <MentoReviewBox
               m_name={mentoInfoData.data.data.mentor.m_name}

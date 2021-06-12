@@ -7,9 +7,6 @@ import ReviewList from "./ReviewList";
 import ModifyButton from "../../ModifyButton";
 import DeleteButton from "../../DeleteButton";
 
-// 변수를 어떻게 처리할 것인가..
-// api 완성되면 하는 것이기에 제일 마지막에!
-
 const MentoReview = () => {
   const userArray = window.location.href.split("/");
   const mentorname = userArray[5];
@@ -17,8 +14,7 @@ const MentoReview = () => {
   const [mentorvalidation, setMentorvalidation] = useState(false);
   const [subscribe, setSubscribe] = useState(false);
 
-  // 멘토 유효성 검사_다른 경우와 다르게 멘토와 유저가 같으면 쓸 수 없다.
-
+  // 멘토 유효성 검사
   useEffect(() => {
     // 멘토인지 확인
     if (user.loading && mentorname != user.localUserName) {
@@ -118,7 +114,12 @@ const MentoReview = () => {
             />
           </div>
         ) : subscribe ? (
-          <Link to={`/mentoring/mentiview/writing/${mentorname}/review`}>
+          <Link
+            to={{
+              pathname: `/mentoring/mentiview/writing/${mentorname}/review`,
+              state: { mentorvalidation, subscribe },
+            }}
+          >
             <button className="mentiview__detailbutton">리뷰 작성</button>
           </Link>
         ) : (

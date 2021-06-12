@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { Component } from "react";
 import $ from "jquery";
-import { } from "jquery.cookie";
+import {} from "jquery.cookie";
 // import "../../styles/.css";
 
 export default class Login extends Component {
@@ -24,6 +24,7 @@ export default class Login extends Component {
       .then((res) => {
         if (res.data.statusCode === 200) {
           alert("로그인 성공");
+          this.props.history.goBack();
           // 로그인이 됐을 때 쿠키 값을 셋팅하고 성공 메세지 출력
           // login_id라는 키값에 받아온 데이터(id)를 셋팅
           // console.log(res);
@@ -53,6 +54,7 @@ export default class Login extends Component {
 
   componentDidMount() {
     console.log("쿠키: ", $.cookie("JSESSIONID"));
+    console.log(this.props);
   }
 
   render() {

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-function useCertificate() {
+function useCertificate(prop) {
   const [certificate, setCertificate] = useState({
     loading: false,
     localUserName: null,
@@ -19,7 +19,10 @@ function useCertificate() {
       )
       .catch((err) => {
         console.log("login time is ended");
-        window.location.href = "/auth/login";
+        if (!prop) {
+          console.log("실행!");
+          window.location.href = "/auth/login";
+        }
       });
   }
 

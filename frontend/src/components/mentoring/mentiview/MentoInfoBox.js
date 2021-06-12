@@ -21,7 +21,7 @@ const MentoInfoBox = ({
   // 구독 여부 알아오는 변수
   const [initialState, setInitialState] = useState("");
   const [initialClassName, setInitialClassName] = useState("__disabled");
-  // 멘티 리스트 저장 변수
+  // 멘토 리스트 저장 변수
   const [mentiList, setMentiList] = useState(null);
 
   //초기에 페이지 로딩 시 userid를 받아왔다면 현재 사용자의 구독정보를 알아온다.
@@ -81,7 +81,6 @@ const MentoInfoBox = ({
           break;
         }
       }
-
       // 데이터 생성
       const formData = new FormData();
       formData.append("m_name", m_name);
@@ -93,7 +92,7 @@ const MentoInfoBox = ({
           window.location.reload(true);
         })
         .catch((error) => {
-          alert("삭제 실패");
+          alert("삭제할 후기가 업습니다.");
         });
     }
   };

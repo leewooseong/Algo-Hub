@@ -20,7 +20,7 @@ export default class RegisterBody extends Component {
   closeModalSuccess = () => {
     this.setState({ modalOpen: false });
     const { history } = this.props;
-    history.push("/auth/login");
+    history.push("/");
   };
 
   // 회원 추가
