@@ -42,8 +42,8 @@ const ReviewModifyWriting = (props) => {
       .put(`/api/mentor/${mentorname}/review/${contentValue.id}`, formData)
       .then((res) => {
         alert("성공");
-        // props.history.goBack();
-        window.location.replace(window.document.referrer);
+        props.history.goBack();
+        // window.location.replace(window.document.referrer);
       })
       .catch((err) => {
         alert("실패");

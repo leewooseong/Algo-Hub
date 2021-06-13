@@ -42,7 +42,8 @@ export default function MentorModifyWriting(props) {
       .put(`/api/mentor-board/${contentValue.id}`, formData)
       .then((res) => {
         alert("성공");
-        window.location.replace(window.document.referrer);
+        props.history.goBack();
+        // window.location.replace(window.document.referrer);
       })
       .catch((err) => {
         alert("실패");

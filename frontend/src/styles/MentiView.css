@@ -35,6 +35,11 @@
   margin: 0 auto;
 }
 
+.mentiview__detailbuttonbox {
+  dispaly: flex;
+  justify-content: space-around;
+}
+
 .mentiview__detailbutton {
   width: 100px;
   height: 50px;

@@ -92,7 +92,7 @@ const MentoInfoBox = ({
           window.location.reload(true);
         })
         .catch((error) => {
-          alert("삭제할 후기가 업습니다.");
+          alert("삭제할 후기가 없습니다.");
         });
     }
   };

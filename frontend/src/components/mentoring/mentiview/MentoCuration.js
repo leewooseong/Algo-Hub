@@ -36,9 +36,18 @@ const MentoCuration = () => {
           />
         )}
       </div>
-      {mentorvalidation && (
-        <Link to="/mentoring/mentiview/writing/mentor/board">
-          <button className="mentiview__detailbutton">글 작성</button>
+      {mentorvalidation ? (
+        <div className="mentiview__detailbuttonbox">
+          <Link to="/mentoring/mentiview/writing/mentor/board">
+            <button className="mentiview__detailbutton">글 작성</button>
+          </Link>
+          <Link to={`/mentoring/mentiview/${mentorname}`}>
+            <button className="mentiview__detailbutton">돌아가기</button>
+          </Link>
+        </div>
+      ) : (
+        <Link to={`/mentoring/mentiview/${mentorname}`}>
+          <button className="mentiview__detailbutton">돌아가기</button>
         </Link>
       )}
     </div>

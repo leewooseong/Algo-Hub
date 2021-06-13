@@ -35,8 +35,8 @@ const ReviewWriting = (props) => {
       .post("/api/mentors/review", formData)
       .then((res) => {
         alert("성공");
-        // props.history.goBack();
-        window.location.replace(window.document.referrer);
+        props.history.goBack();
+        // window.location.replace(window.document.referrer);
       })
       .catch((err) => {
         alert("실패");
