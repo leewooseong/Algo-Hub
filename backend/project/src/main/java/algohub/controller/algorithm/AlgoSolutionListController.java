@@ -42,7 +42,13 @@ public class AlgoSolutionListController {
             i.remove("p_link");
         }
 
-        String _language = solutionList.get(0).get("language").toString();
+        String _language;
+
+        try {
+            _language = solutionList.get(0).get("language").toString();
+        } catch (Exception e) {
+            _language = " ";
+        }
 
         map.put("language", _language);
 

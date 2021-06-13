@@ -30,11 +30,7 @@
             where p_title = #{p_title}) T1,
             (select SC.s_id, SC.a_id, SC.m_id, SC.l_c_id, SC.code, SC.s_like, LC.language
             from source_code SC left join language_category LC
-            on SC.l_c_id = LC.l_c_id where LC.language = #{language}
-            union
-            select SC.s_id, SC.a_id, SC.m_id, SC.l_c_id, SC.code, SC.s_like, LC.language
-            from source_code SC left join language_category LC
-            on SC.l_c_id = LC.l_c_id where not LC.language = #{language}) T2
+            on SC.l_c_id = LC.l_c_id where LC.language = #{language}) T2
         where T1.a_id = T2.a_id;
     </select>
 </mapper>
