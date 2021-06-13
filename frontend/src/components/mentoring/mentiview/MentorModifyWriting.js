@@ -3,13 +3,14 @@ import useConfirm from "../../../use/useConfirm";
 import axios from "axios";
 
 export default function MentorModifyWriting(props) {
+  // 어떤 페이지에서 왔는지 받아와 select에서 default value으로 사용
+  const contentValue = props.location.state;
+
   // url로 접근 시
   if (contentValue === undefined) {
     window.location.replace("/");
   }
 
-  // 어떤 페이지에서 왔는지 받아와 select에서 default value으로 사용
-  const contentValue = props.location.state;
   let selected;
   if (contentValue.page == "notice") {
     selected = 1;
