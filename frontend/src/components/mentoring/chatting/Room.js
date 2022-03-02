@@ -272,6 +272,7 @@ export default function Room(props) {
     dataChannel.current.onmessage = handleReceiveMessage;
     dataChannel.current.onclose = function () {
       console.log("data channel is closed");
+      remoteVideo.current.srcObject = null;
     };
     myPeerConnection.current.ondatachannel = function (event) {
       dataChannel.current = event.channel;
